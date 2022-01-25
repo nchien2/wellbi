@@ -6,6 +6,6 @@ bp = Blueprint('resources', __name__, url_prefix='/resources')
 
 
 # Display diagnosis here
-@bp.route('/clinics', methods=('GET', 'POST'))
+@bp.route('/', methods=('GET', 'POST'))
 def clinics():
     return render_template("resources.html")
