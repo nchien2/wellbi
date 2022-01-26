@@ -4,6 +4,23 @@
   <h1>{% block title %}Diagnose Me{% endblock %}</h1>
 {% endblock %}
 
+{% block header %}
+  <h2>{% block title %}Check the symptom you are experiencing{% endblock %}</h2>
+{% endblock %}
+
 {% block content %}
-  Insert symptom input form here
+  <div>
+    <input type="checkbox" id="symptom1" name="symptom1">
+    <label for="symptom1">Painful urination</label>
+  </div>
+  <div>
+    <input type="checkbox" id="symptom2" name="symptom2">
+    <label for="symptom2">Sore on genitals, rectum, or mouth</label>
+  </div>
+  <div>
+    <input type="checkbox" id="symptom3" name="symptom3">
+    <label for="symptom2">Small red bumps or tiny white blisters on genitals</label>
+  </div>
+
+  <button type="button">Diagnose me!</button>
 {% endblock %}
