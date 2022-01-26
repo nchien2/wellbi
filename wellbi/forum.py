@@ -1,14 +1,16 @@
+from pathlib import Path
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 
 bp = Blueprint('forum', __name__, url_prefix='/forum')
+curr_user_path = Path(__file__).parent.absolute()
 
 @bp.route('result', methods=['POST'])
 def result():
     title = request.form["new thread title"]
     description = request.form["new thread description"]
-    with open("/Users/tiffanyshi/Desktop/seniorproject/Team21/wellbi/templates/thread.txt", "a") as f:
+    with open(str(curr_user_path) + "/templates/thread.txt", "a") as f:
         f.write("\n" + title + ", " + description)
     refresh_thread()
     return redirect("/forum/community")
@@ -46,7 +48,7 @@ def refresh_thread():
     </h3>
     <div class="threads">
     """
-    with open("/Users/tiffanyshi/Desktop/seniorproject/Team21/wellbi/templates/thread.txt") as f:
+    with open(str(curr_user_path) + "/templates/thread.txt") as f:
         lines = f.readlines()
 
     for line in lines:
@@ -84,7 +86,7 @@ def refresh_thread():
     </style>
     {% endblock %}
     """
-    file = open("/Users/tiffanyshi/Desktop/seniorproject/Team21/wellbi/templates/forum.html", "w")
+    file = open(str(curr_user_path) + "/templates/forum.html", "w")
     file.write(HTML_String)
     file.close()
 
