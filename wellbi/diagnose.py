@@ -9,7 +9,7 @@ bp = Blueprint('diagnose', __name__, url_prefix='/diagnose')
 # Display forum here
 @bp.route('/forums', methods=('GET', 'POST'))
 def forums():
-    return render_template("forum.html")
+    return redirect("/forum/community")
 
 # Display resources here
 @bp.route('/resources', methods=('GET', 'POST'))

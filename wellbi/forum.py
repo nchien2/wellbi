@@ -39,7 +39,6 @@ def refresh_thread():
     <br>
     <input type = "submit">
     </form>
-    <button onClick="window.location.reload();">Post</button>
     </div>
     <br>
     <h3>
