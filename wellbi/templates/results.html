@@ -15,7 +15,7 @@
     <div class = "recommendation">
       <p> We recommend you make an appointment to see a medical professional.
       </p>
-      <p><a href="{{ url_for('resources.clinics')}}">Find Resources on Chlamydia</a>
+      <p><a href="{{ url_for('diagnose.resources')}}">Find Resources on Chlamydia</a>
       </p>
     </div>
     <div class="Summary">
@@ -49,6 +49,10 @@
       </div>
       </body>
     </div>
+    <div class="Forums">
+      <h4 class="header">Forums</h4>
+      <p><a href="{{ url_for('diagnose.forums')}}">Connect with Others</a>
+      </p>
   </div>
 
 {% endblock %}

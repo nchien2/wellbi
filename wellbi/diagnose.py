@@ -6,8 +6,17 @@ from flask import (
 
 bp = Blueprint('diagnose', __name__, url_prefix='/diagnose')
 
+# Display forum here
+@bp.route('/forums', methods=('GET', 'POST'))
+def forums():
+    return render_template("forum.html")
 
-# Display diagnosis here
+# Display resources here
+@bp.route('/resources', methods=('GET', 'POST'))
+def resources():
+    return render_template("chlamydia_resources.html")
+
+# Display results here
 @bp.route('/results', methods=('GET', 'POST'))
 def results():
     return render_template("results.html")
