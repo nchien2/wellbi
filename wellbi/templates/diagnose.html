@@ -5,11 +5,22 @@
 {% endblock %}
 
 {% block content %}
-<form id="form" role="search">
-  <input type="search" id="query" name="q"
-   placeholder="Search..."
-   aria-label="Search through site content">
-  <button>Search</button>
-</form>
-  Insert symptom input form here
+  <h2>Check the symptom you are experiencing</h2>
+
+  <div>
+    <input type="checkbox" id="symptom1" name="symptom1">
+    <label for="symptom1">Painful urination</label>
+  </div>
+
+  <div>
+    <input type="checkbox" id="symptom2" name="symptom2">
+    <label for="symptom2">Sore on genitals, rectum, or mouth</label>
+  </div>
+
+  <div>
+    <input type="checkbox" id="symptom3" name="symptom3">
+    <label for="symptom2">Small red bumps or tiny white blisters on genitals</label>
+  </div>
+
+  <button type="button">Diagnose me!</button>
 {% endblock %}
