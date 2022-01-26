@@ -1,9 +1,172 @@
-{% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Forum{% endblock %}</h1>
-{% endblock %}
+    {% extends 'base.html' %}
 
-{% block content %}
-  Insert forum page here
-{% endblock %}
+    {% block header %}
+      <h1>{% block title %}Wellbi Forum{% endblock %}</h1>
+    {% endblock %}
+
+    {% block content %}
+    <h3>
+    New Thread
+    </h3>
+    <div class="threads">
+    <form action = "result" method = "POST">
+    <label for="new thread title">Title:</label>
+    <br>
+    <input type="text" style="width:400px;" id = "new thread title" name="new thread title">
+    <br>
+    <label for="new thread description">Details:</label>
+    <br>
+    <input type="text" style="height:100px;width:400px;" id = "new thread description" name="new thread description">
+    <br>
+    <br>
+    <input type = "submit">
+    </form>
+    <button onClick="window.location.reload();">Post</button>
+    </div>
+    <br>
+    <h3>
+    Browse Existing Threads
+    </h3>
+    <div class="threads">
+    
+        <li class="row">
+                <h4 class="title">
+                    Chlamydia Tips
+                </h4>
+                <div class="bottom">
+                    <p>
+                         Use this thread to answer all of your questions about chlamydia. This is a support network. Strictly no bullying or offensive content will be tolerated.
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    Help! Do I have Chlamydia????
+                </h4>
+                <div class="bottom">
+                    <p>
+                         These are the symptoms I have and I'm pretty nervous... My parents can't find out about this. What can I do?
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    How I got rid of my anxiety
+                </h4>
+                <div class="bottom">
+                    <p>
+                         This is what helped me get through my anxiety when I was first told I had a STD! Hoping it can help someone else.
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    hi
+                </h4>
+                <div class="bottom">
+                    <p>
+                         hi
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    hi
+                </h4>
+                <div class="bottom">
+                    <p>
+                         hi
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    bye
+                </h4>
+                <div class="bottom">
+                    <p>
+                         hi
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    bye
+                </h4>
+                <div class="bottom">
+                    <p>
+                         hi
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    hello
+                </h4>
+                <div class="bottom">
+                    <p>
+                         helloe
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    pls
+                </h4>
+                <div class="bottom">
+                    <p>
+                         work
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    hello
+                </h4>
+                <div class="bottom">
+                    <p>
+                         hellloooo
+ 
+                    </p>
+                </div>
+        </li>
+        <li class="row">
+                <h4 class="title">
+                    yay 
+                </h4>
+                <div class="bottom">
+                    <p>
+                         it works 
+                    </p>
+                </div>
+        </li>
+    </div>
+    <style>
+            p {
+                margin: 5px 0;
+            }
+            .row {
+                padding: 5px 0;
+            }
+            .bottom {
+                display: flex;
+                color: grey;
+                font-size: 12px;
+                margin: 5px 5px;
+            }
+            .threads {
+                margin: 10px 60px;
+            }
+    </style>
+    {% endblock %}
+    
