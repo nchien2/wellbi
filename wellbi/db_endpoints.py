@@ -15,7 +15,7 @@ params:
   username (string): username
   password (string): password
 '''
-def get_user(username, password):
+def get_user(username, password, update=False):
     user_list = users.where('username', '==', username).get() # .stream() is preferred but doesn't work - look into later
     if not user_list:
         data = {
@@ -24,13 +24,16 @@ def get_user(username, password):
             'posts': [],
             'comments': []
         }
-        users.add(data)
-        return data
+        if update:
+            users.document(username).set(data)
+        return None, data
     for user in user_list:
         return user.id, user.to_dict()
 
 def get_user_by_id(id):
-    user = users.document(id)
-    return user.to_dict()
+    user = users.document(id).get()
+    if user.exists:
+        return user.to_dict()
+    return None
 
 # def make_post()
