@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Welcome!
+
+<form method="POST" action= "" >
+    <!-- {% for field in form if field.name != 'csrf_token' and field.name != 'submit' %}
+        <div>
+            {{ field.label() }}
+            {{ field() }}
+            {% for error in field.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <div>{{ form.submit() }}</div> -->
+    {{form.hidden_tag()}}
+    {{form.uname.label()}}
+    {{form.uname()}}<br>
+
+    {{form.password.label()}}
+    {{form.password()}}<br>
+
+    {% if form.errors %}
+        {{ form.errors }}
+    {% endif %}
+    {{form.submit()}}
+</form>
+{% endblock %}
