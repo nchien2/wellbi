@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-from . import diagnose, forum, resources
+import diagnose, forum, resources
 from flask import render_template
 
 
@@ -38,3 +38,5 @@ def create_app(test_config=None):
     app.register_blueprint(resources.bp)
 
     return app
+
+app = create_app(None)
