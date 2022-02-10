@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-from . import diagnose, forum, resources, profile, db_endpoints
+import diagnose, forum, resources, profile, db_endpoints
 from flask import render_template
 import flask_login
 
@@ -54,3 +54,6 @@ def create_app(test_config=None):
         u_ref = db_endpoints.get_user_by_id(id)
         return profile.User(u_ref.to_dict()['username'])
     return app
+
+
+app = create_app(None)
