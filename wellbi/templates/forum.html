@@ -10,7 +10,7 @@
     New Thread
     </h3>
     <div class="threads">
-    <form action = "result" method = "POST">
+    <!-- <form action = "result" method = "POST">
     <label for="new thread title">Title:</label>
     <br>
     <input type="text" style="width:400px;" id = "new thread title" name="new thread title">
@@ -21,7 +21,8 @@
     <br>
     <br>
     <input type = "submit">
-    </form>
+    </form> -->
+    <a href="{{ url_for('forum.new_post') }}"> New Thread</a>
     </div>
     <br>
     <h3>

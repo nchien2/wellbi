@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Welcome!
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+        {% if messages[0] == 'Email address already exists.' %} 
+          Go to <a href="{{ url_for('profile.login') }}"> login page</a>.<br>
+        {% endif %}
+    </div>
+{% endif %}
+{% endwith %}
+
+<form method="POST" action= "" >
+    {{form.hidden_tag()}}
+    {{form.uname.label()}}
+    {{form.uname()}}<br>
+
+    {{form.password.label()}}
+    {{form.password()}}<br>
+
+    {% if type=='signup' %}
+        {{form.password2.label()}}
+        {{form.password2()}}<br>
+
+        {{form.recaptcha}}<br>
+        {% for error in form.recaptcha.errors %}
+            {{ error }}<br>
+        {% endfor %}
+    {% endif %}
+
+    {{form.submit()}}
+</form>
+{% if type == 'login' %}
+Don't have an account? <a href="{{url_for('profile.signup')}}">Create one</a>
+{% else %}
+Already have an account? <a href="{{url_for('profile.login')}}">Login</a>
+{% endif %}
+
+
+{% endblock %}

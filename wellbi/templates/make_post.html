@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Wellbi Forum {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+        {% if messages[0] == 'Email address already exists.' %} 
+          Go to <a href="{{ url_for('profile.login') }}"> login page</a>.<br>
+        {% endif %}
+    </div>
+{% endif %}
+{% endwith %}
+
+<!-- <div class="threads"> -->
+<form method="POST" action= "" >
+  {{form.hidden_tag()}}
+  {{form.title.label()}}: <br>
+  {{form.title()}}<br>
+
+  {{form.body.label()}}: <br>
+  {{form.body()}}<br>
+
+  {% if form.errors %}
+    {{ form.errors }}
+  {% endif %}
+  {{form.submit()}}
+</form>
+<!-- </div> -->
+{% endblock %}
