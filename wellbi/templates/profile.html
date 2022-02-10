@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Welcome, {{ username }}! <br>
-<a href="{{url_for('profile.logout')}}" >Logout </a> 
+<h3> Welcome, {{ username }}! </h3>
+<a href="{{url_for('profile.logout')}}" >Logout </a> <br><br>
+<h5> Posts: </h5>
+{% for i in range(title_list | length) %}
+<a href= "{{url_for('forum.show_post', post_id=id_list[i])}}"> {{title_list[i]}} </a><br>
+{% endfor %}
+
+
 {% endblock %}

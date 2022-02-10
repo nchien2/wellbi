@@ -25,14 +25,20 @@ Welcome!
     {% if type=='signup' %}
         {{form.password2.label()}}
         {{form.password2()}}<br>
+
+        {{form.recaptcha}}<br>
+        {% for error in form.recaptcha.errors %}
+            {{ error }}<br>
+        {% endfor %}
     {% endif %}
 
-    {% if form.errors %}
-        {{ form.errors }}
-    {% endif %}
     {{form.submit()}}
 </form>
 {% if type == 'login' %}
 Don't have an account? <a href="{{url_for('profile.signup')}}">Create one</a>
+{% else %}
+Already have an account? <a href="{{url_for('profile.login')}}">Login</a>
 {% endif %}
+
+
 {% endblock %}

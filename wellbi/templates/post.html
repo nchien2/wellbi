@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+      <h1>{% block title %}Wellbi Forum{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h3> {{post_dict.title}} </h3>
+By: {{post_dict.username}}<br>
+{{post_dict['body']}} <br><br>
+
+
+<h4>Comments: </h4>
+Post a comment:<br>
+{{form.body()}}<br>
+
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+{{form.submit()}}<br>
+
+
+{% endblock %}
