@@ -12,12 +12,22 @@ By: {{post_dict.username}}<br>
 
 <h4>Comments: </h4>
 Post a comment:<br>
-{{form.body()}}<br>
+<form method="POST" action= "{{ url_for('forum.show_post', post_id=post_id) }}" >
+    {{form.hidden_tag()}}
+  
+    {{form.body()}}<br>
+  
+    {% if form.errors %}
+      {{ form.errors }}
+    {% endif %}
+    {{form.submit()}}
+</form>
+<br>
+{% for i in range(contents | length) %}
+<h5>{{authors[i]}}:</h5>
+{{contents[i]}}<br><br>
+{% endfor %}
 
-{% if form.errors %}
-{{ form.errors }}
-{% endif %}
-{{form.submit()}}<br>
 
 
 {% endblock %}

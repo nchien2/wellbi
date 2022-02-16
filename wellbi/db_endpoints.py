@@ -74,18 +74,47 @@ Adds a comment to the database and returns its id.
 
 params:
 content (String) : Content for body of comment
-username (String): Username of user who 
-post_id (String) :
+username (String): Username of user who is commenting
+post_id (String) : id of post comment is under
 '''
 def make_comment(content, username, post_id):
-    post_ref = posts.document(id).get()
     data = {
         'body': content,
         'author': username,
-        'parent-post': post_ref, 
+        'parent-post': post_id, 
         'likes': 0,
         'post-time': firestore.SERVER_TIMESTAMP
     }
     comm_ref = comments.document()
-    comm_ref.add(data)
+    comm_ref.set(data)
+    user_ref = users.document(username)
+    post_ref = posts.document(post_id)
+
+    user_ref.update({u'comments': firestore.ArrayUnion([comm_ref])})
+    post_ref.update({u'comments': firestore.ArrayUnion([comm_ref])})
     return comm_ref.id
+
+'''
+Returns all the comments under a given post
+'''
+def get_comments(post_id):
+    post = posts.document(post_id).get().to_dict()
+    content_list =[]
+    author_list = []
+    for comm_ref in post['comments']:
+        comment = comm_ref.get()
+        content_list.append(comment.to_dict()['body'])
+        author_list.append(comment.to_dict()['author'])
+    return content_list, author_list
+
+'''
+Returns a list of top posts
+'''
+# TODO: Update to only get top few posts by certain criteria... once we decide the criteria
+def get_top_posts():    
+    title_list =[]
+    id_list = []
+    for post in posts.stream():
+        title_list.append(post.to_dict()['title'])
+        id_list.append(post.id)
+    return title_list,id_list
