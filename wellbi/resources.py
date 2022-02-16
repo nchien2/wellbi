@@ -5,6 +5,7 @@ from flask import (
 bp = Blueprint('resources', __name__, url_prefix='/resources')
 
 
+
 # Display diagnosis here
 @bp.route('/', methods=('GET', 'POST'))
 def clinics():
@@ -21,4 +22,3 @@ def syphillis():
 @bp.route('/herpes', methods=('GET', 'POST'))
 def herpes():
 	return render_template("herpes_resources.html")
-
