@@ -6,8 +6,59 @@
 
 {% block content %}
 
-  <h2>Chalmydia</h2>
+  <h2>Chlamydia</h2>
   <p><a href="https://www.mayoclinic.org/diseases-conditions/chlamydia/symptoms-causes/syc-20355349">Symptoms and Causes</a></p>
   <p><a href="https://www.mayoclinic.org/diseases-conditions/chlamydia/diagnosis-treatment/drc-20355355">Diagnosis and Treatment</a></p>
+
+  <label>ZIP Code</label>
+  <input type="text" pattern="[0-9]{5}" title="Five digit zip code" />
+
+  <h3>Nearest Free and Low Cost Clinics</h3>
+  <div id="map"></div>
+    <script>
+      function initMap() {
+        //0: clinic name, 1: clinic coords, 2: clinic street address, 3: clinic city + zip, 4: clinic url, 5: google maps url
+        var clinics = [
+            ['Castro-Mission Health Center', {lat: 37.7631636584137, lng: -122.43202042310821}, "3850 17th St", "San Francisco, CA 94114", "https://sfhealthnetwork.org/primary-care-3/castro-mission-health-center/", "https://www.google.com/maps/place/Castro-Mission+Health+Center/@37.7629686,-122.4339409,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7e1b850da405:0x7297b752598f70bc!8m2!3d37.7629977!4d-122.4320391"],
+            ['Lyon-Martin Women’s Health Services', {lat: 37.769627008041525, lng: -122.4198499752374},"1735 Mission St", "San Francisco, CA 94103", "https://www.healthright360.org/agency/lyon-martin-health-services", "https://www.google.com/maps/place/Lyon-Martin+Health+Services/@37.7693726,-122.4219743,17z/data=!3m1!4b1!4m5!3m4!1s0x8085809f941a51ab:0x2d40c0e8ce3ac376!8m2!3d37.7694045!4d-122.4198473"],
+            ['Tom Waddell Health Center', {lat: 37.779073814363635, lng: -122.41836942751574}, "50 Dr Tom Waddell Pl", "San Francisco, CA 94102", "https://sf.gov/departments/department-public-health", "https://www.google.com/maps/place/Tom+Waddell+Health+Center/@37.7617495,-122.4417223,13.27z/data=!4m9!1m2!2m1!1sTom+Waddell+Health+Center!3m5!1s0x808580995fc5ce29:0xa3672fa2d670435e!8m2!3d37.7783191!4d-122.4184624!15sChlUb20gV2FkZGVsbCBIZWFsdGggQ2VudGVykgEObWVkaWNhbF9jbGluaWM"],
+            ['Haight-Ashbury Free Medical Clinic', {lat: 37.771016131782325, lng: -122.44843816450916}, "558 Clayton St", "San Francisco, CA 94117", "https://www.healthright360.org/agency/haight-ashbury-free-clinics", "https://www.google.com/maps/place/Haight+Ashbury+Free+Clinics/@37.771525,-122.4420009,15z/data=!4m9!1m2!2m1!1sHaight-Ashbury+Free+Medical+Clinic!3m5!1s0x808587531be33af9:0x42ebdb0a04af99d3!8m2!3d37.7699756!4d-122.4485046!15sCiJIYWlnaHQtQXNoYnVyeSBGcmVlIE1lZGljYWwgQ2xpbmljkgEObWVkaWNhbF9jbGluaWM"],
+            ['Mission Neighborhood Health Center', {lat: 37.765220269982855, lng: -122.41662428341466}, "240 Shotwell St", "San Francisco, CA 94110", "http://www.mnhc.org/", "https://www.google.com/maps/place/Mission+Neighborhood+Health+Center/@37.756856,-122.4217632,15.18z/data=!4m5!3m4!1s0x808f7e24c285a429:0x280fe5f2a140e9cd!8m2!3d37.764599!4d-122.416586"]
+        ];
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: clinics[0][1]
+        });
+
+
+        for(i = 0; i < clinics.length; i++) {
+          var marker = new google.maps.Marker({
+            position: clinics[i][1],
+            map: map,
+            title: clinics[i][0],
+            id: i
+          });
+          var content = '<p>' + '<strong>' + clinics[i][0] + '</strong>' + '<br />' +
+                  clinics[i][2] + '<br />' +
+                  clinics[i][3] + '<br />' +
+                  '<a href='+ clinics[i][4] + '>Visit Clinic Website</a>' + '<br />' +
+                  '<a href='+ clinics[i][5] + '>View on Google Maps</a>' + '</p>';
+          var infowindow = new google.maps.InfoWindow();
+          google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+              return function(){
+                  infowindow.setContent(content);
+                  infowindow.open(map, marker);
+              };
+
+          })(marker, content, infowindow));
+        }
+
+      }
+    </script>
+    <script async defer
+    src=
+  "https://maps.googleapis.com/maps/api/js?key=
+  AIzaSyB2bXKNDezDf6YNVc-SauobynNHPo4RJb8&callback=initMap">
+    </script>
 
 {% endblock %}
