@@ -21,49 +21,52 @@ def create_checkboxes():
         <h1>{% block title %}Diagnose Me{% endblock %}</h1>
     {% endblock %}
     
-    {% block header %}
-        <h2>{% block title %}Female{% endblock %}</h2>
-    {% endblock %}
+    <h2>Female</h2>
     
     {% block content %}
-        <h3>Check the symptom you are experiencing</h3>
-        <form action={{ url_for('diagnosis.results') }} method="post"> 
+        <h3>Check the symptoms you are experiencing</h3>
+        <form action={{ url_for('diagnose.results') }} method="post"> 
     """
     female_df = pd.read_csv(str(curr_user_path) + "/static/Disease_Symptoms.csv")
     female_df = female_df.loc[female_df["Gender"] == "Female"]
+    all_symptoms = set()
     for index, row in female_df.iterrows():
         symptoms = row["Symptoms"]
         symptoms = symptoms.strip("[]")
         symptoms = symptoms.split(", ")
+
         for sym in symptoms:
-            HTML_String += f"""
-                <div>
-                    <input type="checkbox" id="{str(sym)}" name="{str(sym)}">
-                    <label for="{str(sym)}">{str(sym)}</label>
-                </div>
-            """
+            all_symptoms.add(sym)
+    for each in all_symptoms:
+        HTML_String += f"""
+            <div>
+                <input type="checkbox" id="{str(each)}" name="{str(each)}">
+                <label for="{str(each)}">{str(each)}</label>
+            </div>
+        """
 
     HTML_String += """
-    {% endblock %}
     
-    {% block header %}
-        <h2>{% block title %}Male{% endblock %}</h2>
-    {% endblock %}
+    <h2>Male</h2>
     
     {% block content %}
-        <h3>Check the symptom you are experiencing</h3>
+        <h3>Check the symptoms you are experiencing</h3>
     """
     male_df = pd.read_csv(str(curr_user_path) + "/static/Disease_Symptoms.csv")
     male_df = male_df.loc[male_df["Gender"]=="Male"]
+    all_symptoms = set()
     for index, row in male_df.iterrows():
         symptoms = row["Symptoms"]
         symptoms = symptoms.strip("[]")
         symptoms = symptoms.split(", ")
+
         for sym in symptoms:
-            HTML_String += f"""
+            all_symptoms.add(sym)
+    for each in all_symptoms:
+        HTML_String += f"""
                 <div>
-                    <input type="checkbox" id="{str(sym)}" name="{str(sym)}">
-                    <label for="{str(sym)}">{str(sym)}</label>
+                    <input type="checkbox" id="{str(each)}" name="{str(each)}">
+                    <label for="{str(each)}">{str(each)}</label>
                 </div>
             """
 
@@ -73,7 +76,7 @@ def create_checkboxes():
     {% endblock %}
     """
 
-    html_file = open(str(curr_user_path) + "/templates/new_diagnose_todo.html", "w")
+    html_file = open(str(curr_user_path) + "/templates/diagnose.html", "w")
     html_file.write(HTML_String)
     html_file.close()
 

@@ -1,5 +1,7 @@
 import functools
 from pathlib import Path
+import operator
+import pandas as pd
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -20,8 +22,36 @@ def resources():
 # Display results here
 @bp.route('/results', methods=('GET', 'POST'))
 def results():
+    curr_user_path = Path(__file__).parent.absolute()
+
+    if request.method == 'POST':
+        df = pd.read_csv(str(curr_user_path) + "/static/Disease_Symptoms.csv")
+        all_symptoms = set()
+        for index, row in df.iterrows():
+            symptoms = row["Symptoms"]
+            symptoms = symptoms.strip("[]")
+            symptoms = symptoms.split(", ")
+
+            for sym in symptoms:
+                all_symptoms.add(sym)
+
+        disease_match = {}
+        for index, row, in df.iterrows():
+            disease_match[row["Disease"]] = 0
+
+        for symptom in all_symptoms:
+            checked = request.form.get(symptom)
+            if checked:
+                for index, row in df.iterrows():
+                    symptoms = row["Symptoms"]
+                    if symptom in symptoms:
+                        disease_match[row["Disease"]] += 1
+
+    sorted_disease_match = sorted(disease_match.items(), key = operator.itemgetter(1), reverse=True)
+
+
     curr_user_path=Path(__file__).parent.absolute()
-    diagnosis = ""
+    diagnosis = sorted_disease_match[0][0]
     common_symptoms = ""
     html = """
     {% extends 'base.html' %}
@@ -43,7 +73,7 @@ def results():
         <div class = "recommendation">
           <p> We recommend you make an appointment to see a medical professional.
           </p>
-          <p><a href="{{ url_for('diagnose.resources')}}">Find Resources on {diagnosis}</a>
+          <p><a href="{"{{"} url_for('diagnose.resources'){"}}"}">Find Resources on {diagnosis}</a>
           </p>
         </div>
         <div class="Feedback">
@@ -73,7 +103,7 @@ def results():
         </div>
         <div class="Forums">
           <h4 class="header">Forums</h4>
-          <p><a href="{{ url_for('diagnose.forums')}}">Connect with Others</a>
+          <p><a href="{"{{"} url_for('diagnose.forums'){"}}"}">Connect with Others</a>
           </p>
         </div>
       </div>
