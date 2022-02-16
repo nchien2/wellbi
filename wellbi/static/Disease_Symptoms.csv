@@ -1,0 +1,11 @@
+Disease,Gender,Symptoms
+Chlamydia,Female,"[Abnormal vaginal discharge, Irregular bleeding, Abdominal Pain and Fever, Itching or burning in/around the vagina, Painful or burning sensation when urinating]"
+Gonorrhea,Female,"[Cloudy/yellow vaginal discharge, Abdominal or pelvic pain, Irregular bleeding, Painful or more frequent urination]"
+Trichomoniasis,Female,"[Frothy/yellow foul-smelling vaginal discharge, Painful urination, Vaginal itching, Irregular bleeding, Painful intercourse, Pain or discomfort with urination]"
+Syphillis,Female,"[Painless sores, Skin rashes, Sores on body and/or in mouth/vagina/anus, Fever, Swollen lymph nodes, Headaches or muscle aches, Weight loss, Fatigue, Difficulty coordinating muscle movements, Paralysis, Numbness, Dementia, Blindness]"
+Hepatitis C,Female,"[Fatigue, Yellowing of the skin or eyes (jaundice), Nausea and vomiting, Fever, Joint pain, Loss of appetite, Dark urine]"
+Chlamydia,Male,"[Abnormal penile discharge, Painful or swollen testicles, Pain or discomfort with urination]"
+Gonorrhea,Male,"[Pus-like discharge from the tip of the penis, Pain or swelling in one testicle, Pain or discomfort with urination]"
+Trichomoniasis,Male,"[Abnormal penile discharge, Penile itching, Painful intercourse, Pain or discomfort with urination]"
+Syphillis,Male,"[Painless sores, Skin rashes, Sores on body and/or in mouth/vagina/anus, Fever, Swollen lymph nodes, Headaches or muscle aches, Weight loss, Fatigue, Difficulty coordinating muscle movements, Paralysis, Numbness, Dementia, Blindness]"
+Hepatitis C,Male,"[Fatigue, Yellowing of the skin or eyes (jaundice), Nausea and vomiting, Fever, Joint pain, Loss of appetite, Dark urine]"
