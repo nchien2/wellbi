@@ -8,8 +8,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
-from wellbi import db_endpoints
-# import db_endpoints
+# from wellbi import db_endpoints
+import db_endpoints
 
 bp = Blueprint('forum', __name__, url_prefix='/forum')
 curr_user_path = Path(__file__).parent.absolute()
@@ -44,8 +44,8 @@ def comment_show_post():
         username = flask_login.current_user.username
         # user_ref = db_endpoints.get_user_by_id(username)
         # - post = db_endpoints.make_post(title, body, username).get().to_dict()
-        # - session['post'] = {'title': title, 'body': body, 'username': username}        
-        
+        # - session['post'] = {'title': title, 'body': body, 'username': username}
+
         # print(post['post_title'])
         db_endpoints.make_comment(content=body, username=username, post_id=post_id)
     return redirect(url_for("forum.show_post", post_id=post_id))
@@ -56,8 +56,8 @@ def show_post():
     post_id = request.args.get('post_id')
     post_dict = db_endpoints.get_post_by_id(post_id)
     value_dict = {
-        'title': post_dict['title'], 
-        'body': post_dict['body'], 
+        'title': post_dict['title'],
+        'body': post_dict['body'],
         'username': post_dict['author']
     }
     content_list, author_list = db_endpoints.get_comments(post_id)
@@ -73,7 +73,6 @@ def new_post():
         body = form.body.data
         username = flask_login.current_user.username
         post_id = db_endpoints.make_post(title, body, username).get().id
-        
+
         return redirect(url_for("forum.show_post", post_id=post_id))
     return render_template("make_post.html", form=form)
-

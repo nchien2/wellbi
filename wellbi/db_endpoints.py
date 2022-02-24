@@ -1,6 +1,6 @@
 from firebase_admin import credentials, firestore, initialize_app
 
-cred = credentials.Certificate('wellbi/key.json')
+cred = credentials.Certificate('key.json')
 default_app = initialize_app(cred)
 db = firestore.client()
 users = db.collection(u'users')
@@ -11,7 +11,7 @@ comments = db.collection(u'comments')
 Given a username and password, retrieves and returns user information from the database.
 If there is no matching user and update=True, creates a new one and returns it.
 
-params: 
+params:
   username (string): username
   password (string): password
   update (bool): True if new user should be created. False if you just want to retrieve user data.
@@ -42,16 +42,16 @@ def get_user_by_id(id):
 
 
 '''
-Adds a post to the database and returns its id. 
+Adds a post to the database and returns its id.
 
 params:
   title (String)   : Title of post
   content (String) : Content for body of post
-  username (ref): Username of user who created post. 
+  username (ref): Username of user who created post.
 '''
 def make_post(title, content, username):
     data = {
-        'body': content, 
+        'body': content,
         'comments': [],
         'likes': 0,
         'title': title,
@@ -70,7 +70,7 @@ def get_post_by_id(id):
     return post.to_dict()
 
 '''
-Adds a comment to the database and returns its id. 
+Adds a comment to the database and returns its id.
 
 params:
 content (String) : Content for body of comment
@@ -81,7 +81,7 @@ def make_comment(content, username, post_id):
     data = {
         'body': content,
         'author': username,
-        'parent-post': post_id, 
+        'parent-post': post_id,
         'likes': 0,
         'post-time': firestore.SERVER_TIMESTAMP
     }
@@ -111,7 +111,7 @@ def get_comments(post_id):
 Returns a list of top posts
 '''
 # TODO: Update to only get top few posts by certain criteria... once we decide the criteria
-def get_top_posts():    
+def get_top_posts():
     title_list =[]
     id_list = []
     for post in posts.stream():
