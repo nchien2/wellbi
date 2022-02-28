@@ -9,7 +9,7 @@ from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
 # from wellbi import db_endpoints
-import db_endpoints
+from wellbi import db_endpoints
 
 bp = Blueprint('forum', __name__, url_prefix='/forum')
 curr_user_path = Path(__file__).parent.absolute()

@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-import diagnose, forum, resources, profile, db_endpoints
+from wellbi import diagnose, forum, resources, profile, db_endpoints
 from flask import render_template
 import flask_login
 # import django_heroku

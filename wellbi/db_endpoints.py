@@ -1,6 +1,6 @@
 from firebase_admin import credentials, firestore, initialize_app
 
-cred = credentials.Certificate('key.json')
+cred = credentials.Certificate('wellbi/key.json')
 default_app = initialize_app(cred)
 db = firestore.client()
 users = db.collection(u'users')

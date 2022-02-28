@@ -1,5 +1,5 @@
 import functools
-import db_endpoints, __init__
+from wellbi import db_endpoints, __init__
 from flask_wtf import FlaskForm, Recaptcha, RecaptchaField
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
