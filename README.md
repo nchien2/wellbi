@@ -46,4 +46,5 @@ Ethan | ML (CV, NLU/NLP), AWS, GCP, Streamlit | Works in bursts, likes collabora
 
 
 https://trello.com/b/ZR43pamz/sprint-to-dos
+
 https://docs.google.com/document/d/1xXoGuB7Q3TaHP-GhRnFV7zLkegfDRG7v2s_8tc05rcA/edit?usp=sharing
