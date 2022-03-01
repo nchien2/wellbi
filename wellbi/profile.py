@@ -1,5 +1,5 @@
 import functools
-from . import db_endpoints, __init__
+from wellbi import db_endpoints, __init__
 from flask_wtf import FlaskForm, Recaptcha, RecaptchaField
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
@@ -18,7 +18,7 @@ class User:
     def __init__(self, username):
         self.username = username
         self.active=True
-    
+
     def is_active(self):
         return self.active
 
@@ -52,7 +52,7 @@ class User:
             return NotImplemented
         return not equal
 
-        
+
 class loginForm(FlaskForm):
     uname = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -100,7 +100,7 @@ def signup():
         if id:
             flash('Email address already exists.')
             return redirect(url_for('profile.signup', type='signup'))
-        
+
         logged_user = User(username)
         flask_login.login_user(logged_user, remember=True)
         return redirect(url_for('profile.display', username=username))
