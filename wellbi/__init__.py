@@ -6,6 +6,8 @@ from flask import render_template
 import flask_login
 # import django_heroku
 
+
+
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
