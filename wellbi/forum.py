@@ -1,3 +1,4 @@
+from dataclasses import Field
 from pathlib import Path
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -5,8 +6,8 @@ from flask import (
 import flask_login
 from flask_login import login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, TextAreaField #, FieldList
+from wtforms.validators import DataRequired, Length
 
 # from wellbi import db_endpoints
 from wellbi import db_endpoints
@@ -15,13 +16,17 @@ bp = Blueprint('forum', __name__, url_prefix='/forum')
 curr_user_path = Path(__file__).parent.absolute()
 
 class newPostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired(), Length(1, 200)], )
     body = TextAreaField('Body', validators=[DataRequired()])
+    # tags = FieldList('Tags', )
     submit = SubmitField('Post')
 
 class commentForm(FlaskForm):
     body = TextAreaField('Body', validators=[DataRequired()])
     submit = SubmitField('Post Comment')
+
+class likeForm(FlaskForm):
+    like = SubmitField('Like')
 
 @bp.route('result', methods=['POST'])
 def result():
@@ -37,17 +42,23 @@ def community():
 @login_required
 def comment_show_post():
     form = commentForm()
-
     if form.validate_on_submit():
         post_id = request.args.get('post_id')
         body = form.body.data
         username = flask_login.current_user.username
-        # user_ref = db_endpoints.get_user_by_id(username)
-        # - post = db_endpoints.make_post(title, body, username).get().to_dict()
-        # - session['post'] = {'title': title, 'body': body, 'username': username}
+        db_endpoints.make_comment(content=body, username=username, post_id=post_id)   
+        return redirect(url_for("forum.show_post", post_id=post_id))
 
-        # print(post['post_title'])
-        db_endpoints.make_comment(content=body, username=username, post_id=post_id)
+@bp.route('/like/<post_id>')
+def like(post_id):
+    username = flask_login.current_user.username
+    db_endpoints.like_post(post_id, username)
+    return redirect(url_for("forum.show_post", post_id=post_id))
+
+@bp.route('comment/like/<comment_id>')
+def like_comment(comment_id):
+    username = flask_login.current_user.username
+    post_id = db_endpoints.like_comment(comment_id, username)
     return redirect(url_for("forum.show_post", post_id=post_id))
 
 @bp.route('/show_post', methods=(['GET']))
@@ -58,11 +69,15 @@ def show_post():
     value_dict = {
         'title': post_dict['title'],
         'body': post_dict['body'],
-        'username': post_dict['author']
+        'username': post_dict['author'],
+        'likes': post_dict['likes']
     }
-    content_list, author_list = db_endpoints.get_comments(post_id)
+    liked_post, liked_comments = db_endpoints.get_liked_ids(flask_login.current_user.username, post_id)
+    comment_list = db_endpoints.get_comments(post_id)
     return render_template("post.html", form=form, post_dict=value_dict, post_id=post_id, \
-                           contents=content_list, authors=author_list)
+                           comments=comment_list, liked_post=liked_post, liked_comments=liked_comments)
+
+
 
 @bp.route('/new_post', methods=('GET', 'POST'))
 @login_required

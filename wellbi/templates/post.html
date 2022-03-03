@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 
 {% block header %}
-      <h1>{% block title %}Wellbi Forum{% endblock %}</h1>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="{{url_for('static', filename='helpers.js')}}"></script>
+
+    <h1>{% block title %}Wellbi Forum{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <h3> {{post_dict.title}} </h3>
 By: {{post_dict.username}}<br>
 {{post_dict['body']}} <br><br>
-
+<!-- <button class=pressed_button> Like </button> -->
+{% if not liked_post %}
+    <button class=like_button class=upvote_button data-id={{post_id}}>Like</button> {{post_dict['likes']}} <br><br>
+{% else %}
+    <button class=like_button class=downvote_button data-id={{post_id}}>Unlike</button> {{post_dict['likes']}} <br><br>   
+{% endif %}
 
 <h4>Comments: </h4>
 Post a comment:<br>
@@ -23,11 +31,14 @@ Post a comment:<br>
     {{form.submit()}}
 </form>
 <br>
-{% for i in range(contents | length) %}
-<h5>{{authors[i]}}:</h5>
-{{contents[i]}}<br><br>
+{% for i in range(comments | length) %}
+<h5>{{comments[i]['author']}}:</h5>
+{{comments[i]['body']}}<br>
+{% if i not in liked_comments %}
+<button class=comment_like class=upvote_button data-id={{comments[i]['id']}}>Like</button> {{comments[i]['likes']}} <br><br>
+{% else %}
+<button class=comment_like class=downvote_button data-id={{comments[i]['id']}} >Unlike</button> {{comments[i]['likes']}} <br><br>
+{% endif %}
+
 {% endfor %}
-
-
-
 {% endblock %}

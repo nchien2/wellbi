@@ -2,7 +2,7 @@ import functools
 from wellbi import db_endpoints, __init__
 from flask_wtf import FlaskForm, Recaptcha, RecaptchaField
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from flask import current_app as app
 import flask_login
 from flask_login import login_required
@@ -18,7 +18,7 @@ class User:
     def __init__(self, username):
         self.username = username
         self.active=True
-
+    
     def is_active(self):
         return self.active
 
@@ -52,16 +52,16 @@ class User:
             return NotImplemented
         return not equal
 
-
+        
 class loginForm(FlaskForm):
-    uname = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    uname = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(1, 20)])
     submit = SubmitField('Log in')
 
 class signupForm(FlaskForm):
-    uname = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+    uname = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(1, 20)])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(1, 20)])
     recaptcha = RecaptchaField(validators=[Recaptcha(message="Recaptcha failed. Try again.")])
     submit = SubmitField('Sign up')
 
@@ -98,9 +98,9 @@ def signup():
         # If the user with username already exists, return to signup
         print(id)
         if id:
-            flash('Email address already exists.')
+            flash('Username already exists.')
             return redirect(url_for('profile.signup', type='signup'))
-
+        
         logged_user = User(username)
         flask_login.login_user(logged_user, remember=True)
         return redirect(url_for('profile.display', username=username))
@@ -121,8 +121,7 @@ def display():
         post = post_ref.get()
         title_list.append(post.to_dict()['title'])
         id_list.append(post.id)
-    print(id_list)
-    print(title_list)
+
     return render_template('profile.html', username=username, title_list=title_list, id_list=id_list)
 
 @bp.route('/logout', methods=['GET'])

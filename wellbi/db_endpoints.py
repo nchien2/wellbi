@@ -23,7 +23,9 @@ def get_user(username, password, update=False):
             'username': username,
             'password': password,
             'posts': [],
-            'comments': []
+            'comments': [],
+            'liked_posts':[],
+            'liked_comments':[]
         }
         if update:
             users.document(username).set(data)
@@ -99,13 +101,12 @@ Returns all the comments under a given post
 '''
 def get_comments(post_id):
     post = posts.document(post_id).get().to_dict()
-    content_list =[]
-    author_list = []
+    comment_list = []
     for comm_ref in post['comments']:
-        comment = comm_ref.get()
-        content_list.append(comment.to_dict()['body'])
-        author_list.append(comment.to_dict()['author'])
-    return content_list, author_list
+        comment = comm_ref.get().to_dict()
+        comment['id'] = comm_ref.id
+        comment_list.append(comment)
+    return comment_list
 
 '''
 Returns a list of top posts
@@ -118,3 +119,41 @@ def get_top_posts():
         title_list.append(post.to_dict()['title'])
         id_list.append(post.id)
     return title_list,id_list
+
+'''
+Likes post with post_id and records which user liked it. If post is already liked, 
+instead unlikes it
+'''
+def like_post(post_id, username):
+    post = posts.document(post_id)
+    user_ref = users.document(username)
+    if post_id in user_ref.get().to_dict()['liked_posts']:
+        user_ref.update({u'liked_posts': firestore.ArrayRemove([post_id])})
+        post.update({u'likes': firestore.Increment(-1)})
+    else:
+        user_ref.update({u'liked_posts': firestore.ArrayUnion([post_id])})
+        post.update({u'likes': firestore.Increment(1)})
+
+def like_comment(comment_id, username):
+    comment = comments.document(comment_id)
+    user_ref = users.document(username)
+    if comment_id in user_ref.get().to_dict()['liked_comments']:
+        user_ref.update({u'liked_comments': firestore.ArrayRemove([comment_id])})
+        comment.update({u'likes': firestore.Increment(-1)})
+    else:
+        user_ref.update({u'liked_comments': firestore.ArrayUnion([comment_id])})
+        comment.update({u'likes': firestore.Increment(1)})
+    return comment.get().to_dict()['parent-post']
+
+def get_liked_ids(username, post_id):
+    user_dict = users.document(username).get().to_dict()
+    liked = False
+    liked_comm_list = []
+    if post_id in user_dict['liked_posts']:
+        liked = True
+    post = posts.document(post_id).get().to_dict()
+    comments = post['comments']
+    for i in range(len(comments)):
+        if comments[i].id in user_dict['liked_comments']:
+            liked_comm_list.append(i)
+    return liked, liked_comm_list 

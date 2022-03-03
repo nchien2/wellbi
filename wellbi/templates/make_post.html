@@ -27,9 +27,9 @@
   {{form.body.label()}}: <br>
   {{form.body()}}<br>
 
-  {% if form.errors %}
-    {{ form.errors }}
-  {% endif %}
+  {% for att in form.errors %}
+    Error in {{att}}: {{ form.errors[att][0] }} <br>
+  {% endfor %}
   {{form.submit()}}
 </form>
 <!-- </div> -->
