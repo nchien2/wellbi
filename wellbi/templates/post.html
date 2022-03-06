@@ -2,7 +2,7 @@
 
 {% block header %}
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="{{url_for('static', filename='helpers.js')}}"></script>
+    <script src="{{url_for('static', filename='like_helpers.js')}}"></script>
 
     <h1>{% block title %}Wellbi Forum{% endblock %}</h1>
 {% endblock %}
@@ -10,6 +10,11 @@
 {% block content %}
 <h3> {{post_dict.title}} </h3>
 By: {{post_dict.username}}<br>
+{% if post_dict.tags %}
+Tags: 
+{{ ', '.join(post_dict.tags) }}
+<br><br>
+{% endif %}
 {{post_dict['body']}} <br><br>
 <!-- <button class=pressed_button> Like </button> -->
 {% if not liked_post %}

@@ -51,19 +51,19 @@ params:
   content (String) : Content for body of post
   username (ref): Username of user who created post.
 '''
-def make_post(title, content, username):
+def make_post(title, content, username, tags):
     data = {
         'body': content,
         'comments': [],
         'likes': 0,
         'title': title,
         'author': username,
+        'tags': tags,
         'created_at': firestore.SERVER_TIMESTAMP
     }
     postref = posts.document()
     postref.set(data)
     user_ref = users.document(username)
-    print(user_ref)
     user_ref.update({u'posts': firestore.ArrayUnion([postref])})
     return postref
 
