@@ -7,7 +7,7 @@ Welcome!
 {% if messages %}
     <div class="notification is-danger">
         {{ messages[0] }}
-        {% if messages[0] == 'Email address already exists.' %} 
+        {% if messages[0] == 'Email address already exists.' %}
           Go to <a href="{{ url_for('profile.login') }}"> login page</a>.<br>
         {% endif %}
     </div>
@@ -16,7 +16,7 @@ Welcome!
 
 <form method="POST" action= "" >
     {{form.hidden_tag()}}
-    {{form.uname.label()}}
+    {{{form.uname.label()}}
     {{form.uname()}}<br>
 
     {{form.password.label()}}
