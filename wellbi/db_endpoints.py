@@ -104,8 +104,11 @@ def get_comments(post_id):
     comment_list = []
     for comm_ref in post['comments']:
         comment = comm_ref.get().to_dict()
-        comment['id'] = comm_ref.id
-        comment_list.append(comment)
+        if comment:
+            comment['id'] = comm_ref.id
+            comment_list.append(comment)
+        else:
+            comment_list.append(None)
     return comment_list
 
 '''
@@ -157,3 +160,11 @@ def get_liked_ids(username, post_id):
         if comments[i].id in user_dict['liked_comments']:
             liked_comm_list.append(i)
     return liked, liked_comm_list 
+
+def delete_post(id, username):
+    posts.document(id).delete()
+    users.document(username).update({'posts': firestore.ArrayRemove([posts.document(id)])})
+
+def delete_comment(id, username):
+    comments.document(id).delete()
+    users.document(username).update({'comments': firestore.ArrayRemove([comments.document(id)])})

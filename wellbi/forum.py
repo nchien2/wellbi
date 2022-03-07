@@ -51,6 +51,7 @@ def comment_show_post():
 def show_post():
     form = commentForm()
     post_id = request.args.get('post_id')
+    print(post_id)
     post_dict = db_endpoints.get_post_by_id(post_id)
     value_dict = {
         'title': post_dict['title'],
@@ -59,9 +60,10 @@ def show_post():
         'likes': post_dict['likes'],
         'tags': post_dict['tags']
     }
+ 
     liked_post, liked_comments = db_endpoints.get_liked_ids(flask_login.current_user.username, post_id)
     comment_list = db_endpoints.get_comments(post_id)
-    return render_template("post.html", form=form, post_dict=value_dict, post_id=post_id, \
+    return render_template("post.html", form=form, post_dict=value_dict, post_id=post_id, curr_user=flask_login.current_user.username, \
                            comments=comment_list, liked_post=liked_post, liked_comments=liked_comments)
 
 
@@ -108,3 +110,18 @@ def get_clinics():
         print(zipcode)
         return render_template("test.html", form=form)
     return render_template("test.html", form=form)
+
+@bp.route('/delete-post/<id>', methods=['GET'])
+def delete_post(id):
+    # id = request.args.get('id')
+    db_endpoints.delete_post(id, flask_login.current_user.username)
+    return redirect(url_for('profile.display'))
+
+@bp.route('/delete-comment/<id>/<parent>', methods=['GET'])
+def delete_comment(id, parent):
+    # id = request.args.get('id')
+    # parent = request.args.get('parent')
+    print(f'id: {id}')
+    print(f'parent: {parent}')
+    db_endpoints.delete_comment(id, flask_login.current_user.username)
+    return redirect(url_for('forum.show_post', post_id=parent))

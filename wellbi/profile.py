@@ -111,9 +111,40 @@ def signup():
 @login_required
 def display():
     username = flask_login.current_user.username
+    user_dict = db_endpoints.get_user_by_id(username).to_dict()
+    posts = user_dict['posts']
+    comments = user_dict['comments']
+
+    title_list =[]
+    id_list = []
+    for post_ref in posts:
+        post = post_ref.get()
+        if post == None:
+            title_list.append(None)
+            id_list.append(None)
+        else:
+            title_list.append(post.to_dict()['title'])
+            id_list.append(post.id)
+
+    comm_list = []
+    comm_id_list = []
+    for comm_ref in comments:
+        comment = comm_ref.get().to_dict()
+        # print(comment)
+        if comment == None:
+            comm_list.append(None)
+            comm_id_list.append(None)
+        else:
+            comm_list.append(comment['body'])
+            comm_id_list.append(comment['parent-post'])
+
+    return render_template('my-profile.html', username=username, title_list=title_list, id_list=id_list, \
+                            comm_list=comm_list, comm_id_list=comm_id_list)
+
+@bp.route('/<username>', methods=('GET', 'POST'))
+def display_other(username):
     user_obj = db_endpoints.get_user_by_id(username)
     posts = user_obj.to_dict()['posts']
-    print(posts)
 
     title_list =[]
     id_list = []
