@@ -9,6 +9,7 @@ from flask import (
 
 bp = Blueprint('diagnose', __name__, url_prefix='/diagnose')
 
+
 # Display forum here
 @bp.route('/forums', methods=('GET', 'POST'))
 def forums():
@@ -17,7 +18,20 @@ def forums():
 # Display resources here
 @bp.route('/resources', methods=('GET', 'POST'))
 def resources():
-    return render_template("resources.html")
+    condition = request.args.get('diagnosis')
+    if condition == 'Chlamydia':
+        return redirect("/resources/chlamydia")
+    elif condition == 'Gonorrhea':
+        return redirect("/resources/gonorrhea")
+    elif condition == 'Trichomoniasis':
+        return redirect("/resources/trichomoniasis")
+    elif condition == 'Syphillis':
+        print('in diagnose.py if statement for syphillis')
+        return redirect("/resources/syphillis")
+    elif condition == 'Hepatitis C':
+        return redirect("/resources/hepatitisC")
+    else:
+        return redirect("/resources/clinics")
 
 # Display results here
 @bp.route('/results', methods=('GET', 'POST'))
@@ -73,7 +87,7 @@ def results():
         <div class = "recommendation">
           <p> We recommend you make an appointment to see a medical professional.
           </p>
-          <p><a href="{"{{"} url_for('diagnose.resources'){"}}"}">Find Resources on {diagnosis}</a>
+          <p><a href="{"{{"} url_for('diagnose.resources', diagnosis = '{diagnosis}'){"}}"}">Find Resources on {diagnosis}</a>
           </p>
         </div>
         <div class="Feedback">

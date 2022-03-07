@@ -107,7 +107,7 @@ def signup():
     return render_template('login.html', form=form, type='signup')
 
 
-@bp.route('/', methods=('GET', 'POST'))
+@bp.route('/display', methods=('GET', 'POST'))
 @login_required
 def display():
     username = flask_login.current_user.username

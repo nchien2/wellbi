@@ -6,12 +6,12 @@
 
 {% block content %}
 
-  <h2>Syphillis</h2>
-  <p><a href="https://www.mayoclinic.org/diseases-conditions/syphilis/symptoms-causes/syc-20351756">Symptoms and Causes</a></p>
-  <p><a href="https://www.mayoclinic.org/diseases-conditions/syphilis/diagnosis-treatment/drc-20351762">Diagnosis and Treatment</a></p>
+  <h2>Hepatitis C</h2>
+  <p><a href="https://www.mayoclinic.org/diseases-conditions/hepatitis-c/symptoms-causes/syc-20354278">Symptoms and Causes</a></p>
+  <p><a href="https://www.mayoclinic.org/diseases-conditions/hepatitis-c/diagnosis-treatment/drc-20354284">Diagnosis and Treatment</a></p>
 
   <h3>Enter Zipcode:</h3><br>
-  <form method="POST" action= "{{ url_for('resources.syphillis')}}" >
+  <form method="POST" action= "{{ url_for('resources.hepatitisC')}}" >
     {{form.hidden_tag()}}
 
     {{form.zipcode()}}<br>

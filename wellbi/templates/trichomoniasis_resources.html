@@ -6,12 +6,12 @@
 
 {% block content %}
 
-  <h2>Syphillis</h2>
-  <p><a href="https://www.mayoclinic.org/diseases-conditions/syphilis/symptoms-causes/syc-20351756">Symptoms and Causes</a></p>
-  <p><a href="https://www.mayoclinic.org/diseases-conditions/syphilis/diagnosis-treatment/drc-20351762">Diagnosis and Treatment</a></p>
+<h2>Trichomoniasis</h2>
+<p><a href="https://www.mayoclinic.org/diseases-conditions/trichomoniasis/symptoms-causes/syc-20378609">Symptoms and Causes</a></p>
+<p><a href="https://www.mayoclinic.org/diseases-conditions/trichomoniasis/diagnosis-treatment/drc-20378613">Diagnosis and Treatment</a></p>
 
   <h3>Enter Zipcode:</h3><br>
-  <form method="POST" action= "{{ url_for('resources.syphillis')}}" >
+  <form method="POST" action= "{{ url_for('resources.trichomoniasis')}}" >
     {{form.hidden_tag()}}
 
     {{form.zipcode()}}<br>
