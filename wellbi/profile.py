@@ -18,7 +18,7 @@ class User:
     def __init__(self, username):
         self.username = username
         self.active=True
-    
+
     def is_active(self):
         return self.active
 
@@ -52,7 +52,7 @@ class User:
             return NotImplemented
         return not equal
 
-        
+
 class loginForm(FlaskForm):
     uname = StringField('Username', validators=[DataRequired(), Length(1, 20)])
     password = PasswordField('Password', validators=[DataRequired(), Length(1, 20)])
@@ -100,7 +100,7 @@ def signup():
         if id:
             flash('Username already exists.')
             return redirect(url_for('profile.signup', type='signup'))
-        
+
         logged_user = User(username)
         flask_login.login_user(logged_user, remember=True)
         return redirect(url_for('profile.display', username=username))
