@@ -6,6 +6,8 @@ db = firestore.client()
 users = db.collection(u'users')
 posts = db.collection(u'posts')
 comments = db.collection(u'comments')
+tag_coll = db.collection(u'tags')
+
 
 '''
 Given a username and password, retrieves and returns user information from the database.
@@ -58,13 +60,30 @@ def make_post(title, content, username, tags):
         'likes': 0,
         'title': title,
         'author': username,
-        'tags': tags,
+        'tags': [tag for tag in tags if tag is not None],
         'created_at': firestore.SERVER_TIMESTAMP
     }
     postref = posts.document()
     postref.set(data)
     user_ref = users.document(username)
     user_ref.update({u'posts': firestore.ArrayUnion([postref])})
+
+    for tag in tags:
+        print(tag)
+        # if tag == None:
+        #     continue
+        tag_list = tag_coll.where('value', '==', tag).get() # .stream() is preferred but doesn't work - look into later
+        print(tag_list)
+        if not tag_list:
+            tag_dict = {
+                'value': tag,
+                'posts': [postref.id]
+            }
+            tagref = tag_coll.document(tag)
+            tagref.set(tag_dict)
+        else:
+            tag_list[0].reference.update({'posts': firestore.ArrayUnion([postref.id])})
+      
     return postref
 
 def get_post_by_id(id):
@@ -123,6 +142,15 @@ def get_top_posts():
         id_list.append(post.id)
     return title_list,id_list
 
+
+def get_posts_with_tag(tag):
+    tag_list = tag_coll.where('value', '==', tag).stream()
+    title_list = []
+    for tag_obj in tag_list:
+        id_list = tag_obj.to_dict()['posts']
+        title_list = [posts.document(id).get().to_dict()['title'] for id in id_list]
+        return id_list, title_list
+
 '''
 Likes post with post_id and records which user liked it. If post is already liked, 
 instead unlikes it
@@ -168,3 +196,7 @@ def delete_post(id, username):
 def delete_comment(id, username):
     comments.document(id).delete()
     users.document(username).update({'comments': firestore.ArrayRemove([comments.document(id)])})
+
+def get_tags():
+    tags = tag_coll.get()
+    return sorted([tag.id for tag in tags], key=str.lower)

@@ -15,6 +15,22 @@
       </form>
     </div>
     <br>
+
+    <h3>
+    Search by Tag
+    </h3>
+    <form method="POST"  >
+      {{form.hidden_tag()}}
+  
+      {{form.tag.label()}}
+      {{form.tag()}}<br>
+  
+      {% for att in form.errors %}
+      Error in {{att}}: {{ form.errors[att][0] }} <br>
+      {% endfor %}
+      {{form.submit()}}
+  </form><br>
+
     <h3>
     Browse Existing Threads
     </h3>

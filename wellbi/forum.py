@@ -6,7 +6,7 @@ from flask import (
 import flask_login
 from flask_login import login_required
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, FieldList
+from wtforms import StringField, SubmitField, TextAreaField, FieldList, SelectField
 from wtforms.validators import DataRequired, Length
 
 # from wellbi import db_endpoints
@@ -19,22 +19,37 @@ class newPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(1, 200)], )
     body = TextAreaField('Body', validators=[DataRequired()])
 
-    tags = FieldList(StringField('Tags', [DataRequired()]), min_entries=1, max_entries=3)
+    tags = FieldList(StringField('Tags'), min_entries=1, max_entries=3)
     submit = SubmitField('Post')
 
 class commentForm(FlaskForm):
     body = TextAreaField('Body', validators=[DataRequired()])
     submit = SubmitField('Post Comment')
 
+class tagSearchForm(FlaskForm):
+    tag = SelectField('Tag')
+    submit = SubmitField('Search')
+
 @bp.route('result', methods=['POST'])
 def result():
     return redirect("/forum/community")
 
 # Show top posts
-@bp.route('/community')
+@bp.route('/community', methods=['GET', 'POST'])
 def community():
+    form = tagSearchForm()
+    form.tag.choices = db_endpoints.get_tags()
+    if form.validate_on_submit():
+        tag = form.tag.data
+        return redirect(url_for('forum.search', tag=tag))
+
     title_list, id_list = db_endpoints.get_top_posts()
-    return render_template('forum.html', title_list=title_list, id_list=id_list)
+    return render_template('forum.html', title_list=title_list, id_list=id_list, form=form)
+
+@bp.route('search/<tag>')
+def search(tag):
+    id_list, title_list = db_endpoints.get_posts_with_tag(tag)
+    return render_template('search_results.html', id_list=id_list, title_list=title_list, tag=tag)
 
 @bp.route('/show_post', methods=['POST'])
 @login_required
@@ -52,6 +67,7 @@ def show_post():
     form = commentForm()
     post_id = request.args.get('post_id')
     print(post_id)
+    
     post_dict = db_endpoints.get_post_by_id(post_id)
     value_dict = {
         'title': post_dict['title'],

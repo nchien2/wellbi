@@ -13,7 +13,12 @@ By: <a href="{{url_for('profile.display_other', username=post_dict.username)}}">
 
 {% if post_dict.tags %}
     Tags: 
-    {{ ', '.join(post_dict.tags) }}
+    {% for tag in post_dict.tags %}
+        <a href="{{url_for('forum.search', tag=tag)}}">{{tag}}</a>
+        {% if not loop.last %}
+, 
+        {% endif %}
+    {% endfor %}
     <br><br>
 {% endif %}
 
