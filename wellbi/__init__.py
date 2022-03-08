@@ -56,6 +56,7 @@ def create_app(test_config=None):
         # 2. Create a new object of `User` class and return it.
         u_ref = db_endpoints.get_user_by_id(id)
         return profile.User(u_ref.to_dict()['username'])
+        # return "test"
     return app
 
 
