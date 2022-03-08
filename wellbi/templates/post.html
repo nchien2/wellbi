@@ -1,14 +1,41 @@
 {% extends 'base.html' %}
 
 {% block header %}
-      <h1>{% block title %}Wellbi Forum{% endblock %}</h1>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="{{url_for('static', filename='like_helpers.js')}}"></script>
+
+    <h1>{% block title %}Wellbi Forum{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <h3> {{post_dict.title}} </h3>
-By: {{post_dict.username}}<br>
+By: <a href="{{url_for('profile.display_other', username=post_dict.username)}}">{{post_dict.username}} </a><br>
+
+{% if post_dict.tags %}
+    Tags: 
+    {% for tag in post_dict.tags %}
+        <a href="{{url_for('forum.search', tag=tag)}}">{{tag}}</a>
+        {% if not loop.last %}
+, 
+        {% endif %}
+    {% endfor %}
+    <br><br>
+{% endif %}
+
 {{post_dict['body']}} <br><br>
 
+{% if curr_user == post_dict.username %}
+<form action="{{ url_for('forum.delete_post', id=post_id) }}", method="get">
+    <button class="delete_button" type="submit">Delete</button>
+</form>
+    
+{% endif %}
+
+{% if not liked_post %}
+    <button class="like_button upvote_button" data-id={{post_id}}>Like</button> {{post_dict['likes']}} <br><br>
+{% else %}
+    <button class="like_button downvote_button" data-id={{post_id}}>Unlike</button> {{post_dict['likes']}} <br><br>   
+{% endif %}
 
 <h4>Comments: </h4>
 Post a comment:<br>
@@ -23,11 +50,25 @@ Post a comment:<br>
     {{form.submit()}}
 </form>
 <br>
-{% for i in range(contents | length) %}
-<h5>{{authors[i]}}:</h5>
-{{contents[i]}}<br><br>
+{% for i in range(comments | length) %}
+    {% if comments[i] %}
+        <h5>{{comments[i]['author']}}:</h5>
+        {{comments[i]['body']}}
+
+        {% if comments[i]['author'] == curr_user%}
+            <form action="{{ url_for('forum.delete_comment', id=comments[i]['id'], parent=post_id) }}", method="get">
+                <button class="delete_button" type="submit">Delete</button>
+            </form>
+        {% endif %}<br>
+
+        {% if i not in liked_comments %}
+            <button class="comment_like upvote_button" data-id="{{comments[i]['id']}}">Like</button> {{comments[i]['likes']}} <br><br>
+        {% else %}
+            <button class="comment_like downvote_button" data-id="{{comments[i]['id']}}" >Unlike</button> {{comments[i]['likes']}} <br><br>
+        {% endif %}
+    {% else %}
+        [Comment Deleted]<br>
+    {% endif %}
+
 {% endfor %}
-
-
-
 {% endblock %}
