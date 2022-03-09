@@ -41,7 +41,8 @@ import {
   
     return (
       <Flex
-        bg={useColorModeValue('gray.100', 'gray.900')}
+        rounded={"xl"}
+        bg={useColorModeValue('#457b9d', 'gray.900')}
         align="center"
         justify="center"
         css={{

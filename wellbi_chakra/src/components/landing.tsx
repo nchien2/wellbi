@@ -10,6 +10,7 @@ import {
 export default function WithBackgroundImage() {
   return (
     <Flex
+    rounded={"xl"}
       w={'full'}
       h={'100vh'}
       backgroundImage={
@@ -18,6 +19,7 @@ export default function WithBackgroundImage() {
       backgroundSize={'cover'}
       backgroundPosition={'center center'}>
       <VStack
+        rounded={"xl"}
         w={'full'}
         justify={'center'}
         px={useBreakpointValue({ base: 4, md: 8 })}
@@ -28,23 +30,22 @@ export default function WithBackgroundImage() {
             fontWeight={700}
             lineHeight={1.2}
             fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })}>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-            eiusmod tempor
+            We are here to help. Click to diagnose or explore general resources.
           </Text>
           <Stack direction={'row'}>
             <Button
-              bg={'blue.400'}
+              bg={'#1d3557'}
               rounded={'full'}
               color={'white'}
-              _hover={{ bg: 'blue.500' }}>
-              Show me more
+              _hover={{ bg: '#457b9d' }}>
+              Diagnose Me
             </Button>
             <Button
-              bg={'whiteAlpha.300'}
+              bg={'#e63946'}
               rounded={'full'}
               color={'white'}
-              _hover={{ bg: 'whiteAlpha.500' }}>
-              Show me more
+              _hover={{ bg: 'pink.300' }}>
+              Explore Resources
             </Button>
           </Stack>
         </Stack>
