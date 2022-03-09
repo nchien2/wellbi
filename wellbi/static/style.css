@@ -82,10 +82,10 @@ ul{
 }
 
 .banner{
-    width: 90%;
+    width: 80%;
     height: 70%;
     position: absolute;
-    top: 100%;
+    top: 25%;
     left: 150px;
     color: #fff;
 }
