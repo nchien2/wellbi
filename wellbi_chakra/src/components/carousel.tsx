@@ -38,6 +38,7 @@ export default function Carousel() {
 
   return (
     <Box
+      rounded="xl"
       position={'relative'}
       height={'750px'}
       width={'full'}
@@ -56,6 +57,8 @@ export default function Carousel() {
       />
       {/* Left Icon */}
       <IconButton
+        bg='#e63946'
+        _hover={{ bg: 'pink.300' }}
         aria-label="left-arrow"
         colorScheme="messenger"
         borderRadius="full"
@@ -69,6 +72,8 @@ export default function Carousel() {
       </IconButton>
       {/* Right Icon */}
       <IconButton
+        bg='#e63946'
+        _hover={{ bg: 'pink.300' }}
         aria-label="right-arrow"
         colorScheme="messenger"
         borderRadius="full"

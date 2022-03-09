@@ -36,21 +36,21 @@ export default function SimpleThreeColumns() {
           icon={<Icon as={FcConferenceCall} w={10} h={10} />}
           title={'Establish Community'}
           text={
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+            "Take control of your education with our community forum. Share experiences or inquire about any ailments you're facing."
           }
         />
         <Feature
           icon={<Icon as={FcLibrary} w={10} h={10} />}
           title={'Obtain Resources and Information'}
           text={
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+            "Knowledge is power: Empower yourself and others through discovering free and low-cost clinics near you."
           }
         />
         <Feature
           icon={<Icon as={FcCustomerSupport } w={10} h={10} />}
           title={'Contact Support'}
           text={
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+            "Reach out with any questions or concerns, we eagerly await feedback."
           }
         />
       </SimpleGrid>
