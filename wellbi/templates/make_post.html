@@ -25,24 +25,24 @@
 <form method="POST" action= "" >
   {{form.hidden_tag()}}
   {{form.title.label()}}: <br>
-  {{form.title()}}<br>
+  {{form.title(class_="form-control limit-input")}}<br>
 
   {{form.body.label()}}: <br>
-  {{form.body()}}<br>
+  {{form.body(class_="form-control limit-input")}}<br>
 
   <div id='tags'>
     {{form.tags.label()}}:<br>
     {% for tag_field in form.tags %}
-      {{ tag_field }} <br>
+      {{ tag_field(class_="form-control limit-input") }} <br>
     {% endfor %}
   </div>
-  <button type='button' id=add_tag>Add Tag</button> <br><br>
+  <button type='button' class='btn btn-primary'id=add_tag>Add Tag</button> <br><br>
   <!-- &nbsp <button type='button' id=remove_tag>Remove Tag</button>  -->
 
   {% for att in form.errors %}
     Error in {{att}}: {{ form.errors[att][0] }} <br>
   {% endfor %}
-  {{form.submit()}}
+  {{form.submit(class_="btn btn-primary")}}
 </form>
 <div id='count_div', style='display: none;'>0</div>
 {% endblock %}

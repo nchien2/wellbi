@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
+    <link href="../static/signin.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="{{url_for('static', filename='like_helpers.js')}}"></script>
 
@@ -48,12 +49,12 @@ Post a comment:<br>
 <form method="POST" action= "{{ url_for('forum.show_post', post_id=post_id) }}" >
     {{form.hidden_tag()}}
   
-    {{form.body()}}<br>
+    {{form.body(class_="form-control limit-input")}}<br>
   
     {% if form.errors %}
       {{ form.errors }}
     {% endif %}
-    {{form.submit()}}
+    {{form.submit(class_="btn btn-primary btn-block")}}
 </form>
 <br>
 {% for i in range(comments | length) %}

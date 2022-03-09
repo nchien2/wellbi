@@ -8,6 +8,7 @@ $(document).ready(function() {
         const new_count = Number(count_div.innerHTML) + 1
 
         tag_field.setAttribute('name', 'tags-' + new_count) 
+        tag_field.setAttribute('class', 'form-control limit-input') 
         tag_div.appendChild(tag_field)
         tag_div.appendChild(br)
 

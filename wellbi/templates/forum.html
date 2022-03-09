@@ -6,37 +6,36 @@
     {% endblock %}
 
     {% block content %}
-    <h3>
-    New Thread
-    </h3>
-    <div class="threads">
+    <div class='main-div'>
+      <h3>
+      New Thread
+      </h3>
       <form action="{{url_for('forum.new_post')}}" method="get" >
-        <button type="submit">New Post</button>
+        <button class="btn btn-primary btn-block" type="submit">New Post</button>
       </form>
-    </div>
-    <br>
+      <br>
 
-    <h3>
-    Search by Tag
-    </h3>
-    <form method="POST"  >
-      {{form.hidden_tag()}}
-  
-      {{form.tag.label()}}
-      {{form.tag()}}<br>
-  
-      {% for att in form.errors %}
-      Error in {{att}}: {{ form.errors[att][0] }} <br>
+      <h3>
+      Search by Tag
+      </h3>
+      <form method="POST"  >
+        {{form.hidden_tag()}}
+
+        {{form.tag(class_="form-control limit-input")}}<br>
+    
+        {% for att in form.errors %}
+        Error in {{att}}: {{ form.errors[att][0] }} <br>
+        {% endfor %}
+        {{form.submit(class_="btn btn-primary btn-block")}}
+    </form><br>
+
+      <h3>
+      Browse Existing Threads
+      </h3>
+      {% for i in range(title_list | length) %}
+      <a href= "{{url_for('forum.show_post', post_id=id_list[i])}}"> {{title_list[i]}} </a><br>
       {% endfor %}
-      {{form.submit()}}
-  </form><br>
-
-    <h3>
-    Browse Existing Threads
-    </h3>
-    {% for i in range(title_list | length) %}
-    <a href= "{{url_for('forum.show_post', post_id=id_list[i])}}"> {{title_list[i]}} </a><br>
-    {% endfor %}
+    </div>
     
         
     <style>
@@ -56,5 +55,6 @@
                 margin: 10px 60px;
             }
     </style>
+    
     {% endblock %}
     

@@ -19,12 +19,10 @@
 <form method="POST" class="form-signin">
     {{form.hidden_tag()}}
     
-    <!-- <label for="inputUser" class="sr-only">{{form.uname.label()}}</label> -->
     {{form.uname(id="inputUser", class_="form-control", placeholder="Username")}}<br>
     {{form.password(id="inputPassword", class_="form-control",placeholder="Password")}}<br>
 
     {% if type=='signup' %}
-        <!-- {{form.password2.label()}} -->
         {{form.password2(id="confirmPassword", class_="form-control",placeholder="Confirm Password")}}<br>
 
         {{form.recaptcha}}<br>

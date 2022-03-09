@@ -36,6 +36,10 @@ body {
   border-top-right-radius: 0;
 }
 
+.limit-input {
+    max-width: 500px;
+}
+
 #inputUser {
     margin-bottom: -23px;
     border-bottom-right-radius: 0;

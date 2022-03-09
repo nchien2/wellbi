@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3> {{ username }}'s Profile </h3>
-<h5> Posts: </h5>
+<link href="../static/profile.css" rel="stylesheet">
+<h1> {{ username }}'s Profile </h1>
+<div class="container-md main-div">
+<div class="jumbotron">
+<h3> Posts: </h3>
 {% for i in range(title_list | length) %}
     {% if id_list[i] != None %}
         <a href= "{{url_for('forum.show_post', post_id=id_list[i])}}"> {{title_list[i]}} </a><br>
@@ -12,7 +15,7 @@
 {% endfor %}
 <br>
 
-<h5> Comments: </h5>
+<h3> Comments: </h3>
 {% for i in range(comm_list | length) %}
     {% if comm_list[i] != None %}
         <a href= "{{url_for('forum.show_post', post_id=comm_id_list[i])}}"> {{comm_list[i]}} </a>
@@ -22,4 +25,6 @@
     {% endif %}
 {% endfor %}
 
+</div>
+</div>
 {% endblock %}
