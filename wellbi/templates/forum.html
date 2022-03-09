@@ -6,7 +6,8 @@
     {% endblock %}
 
     {% block content %}
-    <div class='main-div'>
+    <div class='main-div' style='align-items:center'>
+      <div style="display: inline-block; text-align: left;"></div>
       <h3>
       New Thread
       </h3>
@@ -36,6 +37,7 @@
       <a href= "{{url_for('forum.show_post', post_id=id_list[i])}}"> {{title_list[i]}} </a><br>
       {% endfor %}
     </div>
+  </div>
     
         
     <style>
