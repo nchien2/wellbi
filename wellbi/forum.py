@@ -66,7 +66,6 @@ def comment_show_post():
 def show_post():
     form = commentForm()
     post_id = request.args.get('post_id')
-    print(post_id)
     
     post_dict = db_endpoints.get_post_by_id(post_id)
     value_dict = {
@@ -76,14 +75,21 @@ def show_post():
         'likes': post_dict['likes'],
         'tags': post_dict['tags']
     }
- 
-    liked_post, liked_comments = db_endpoints.get_liked_ids(flask_login.current_user.username, post_id)
+    
+    if flask_login.current_user.is_authenticated:
+        liked_post, liked_comments = db_endpoints.get_liked_ids(flask_login.current_user.username, post_id)
+        curr_user = flask_login.current_user.username
+    else:
+        liked_post = []
+        liked_comments = []
+        curr_user = None
     comment_list = db_endpoints.get_comments(post_id)
-    return render_template("post.html", form=form, post_dict=value_dict, post_id=post_id, curr_user=flask_login.current_user.username, \
+    return render_template("post.html", form=form, post_dict=value_dict, post_id=post_id, curr_user=curr_user, \
                            comments=comment_list, liked_post=liked_post, liked_comments=liked_comments)
 
 
 @bp.route('/like/<post_id>')
+@login_required
 def like(post_id):
     username = flask_login.current_user.username
     db_endpoints.like_post(post_id, username)
@@ -129,15 +135,10 @@ def get_clinics():
 
 @bp.route('/delete-post/<id>', methods=['GET'])
 def delete_post(id):
-    # id = request.args.get('id')
     db_endpoints.delete_post(id, flask_login.current_user.username)
     return redirect(url_for('profile.display'))
 
 @bp.route('/delete-comment/<id>/<parent>', methods=['GET'])
 def delete_comment(id, parent):
-    # id = request.args.get('id')
-    # parent = request.args.get('parent')
-    print(f'id: {id}')
-    print(f'parent: {parent}')
     db_endpoints.delete_comment(id, flask_login.current_user.username)
     return redirect(url_for('forum.show_post', post_id=parent))

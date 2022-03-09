@@ -7,8 +7,13 @@
 
     {% block content %}
 
-    <div id="gender">Currently listing symptoms for female gender.</div>
-    <button onclick="toggleGender()">Change Gender</button>
+    <div id="gender">Currently listing symptoms for female sex.</div>
+    <p></p>
+    <button id="button" onclick="toggleGender()">Change to Male Sex</button>
+    <p></p>
+
+    <p></p>
+
     <h3>Check the symptoms you are experiencing</h3>
     <form action="{{ url_for('diagnose.results') }}" method="post">
 
@@ -175,8 +180,10 @@
         function toggleGender() {
             var gender = document.getElementById("gender");
             var checkboxes = document.getElementById("checkboxes");
-            if (gender.innerHTML === "Currently listing symptoms for female gender.") {
-                gender.innerHTML = "Currently listing symptoms for male gender.";
+            var button = document.getElementById("button");
+            if (gender.innerHTML === "Currently listing symptoms for female sex.") {
+                button.innerHTML = "Change to female sex";
+                gender.innerHTML = "Currently listing symptoms for male sex.";
                 checkboxes.innerHTML =`<div>
                     <input type="checkbox" id="Nausea and vomiting" name="Nausea and vomiting">
                     <label for="Nausea and vomiting">Nausea and vomiting</label>
@@ -303,7 +310,8 @@
                 </div>`;
             }
             else {
-                gender.innerHTML = "Currently listing symptoms for female gender.";
+                gender.innerHTML = "Currently listing symptoms for female sex.";                button.innerHTML = "Change to female sex";
+                button.innerHTML = "Change to male sex";
                 checkboxes.innerHTML =`<div>
                     <input type="checkbox" id="Nausea and vomiting" name="Nausea and vomiting">
                     <label for="Nausea and vomiting">Nausea and vomiting</label>
