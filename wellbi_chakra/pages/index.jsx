@@ -28,7 +28,7 @@
 //       </VStack>
 //   </Container>
 // )
-  
+
 // export default Index
 
 // import { app } from "firebase-admin";
@@ -37,19 +37,22 @@
 // import App from "./_app"
 
 
-// if (typeof window !== 'undefined') {  
+// if (typeof window !== 'undefined') {
 //   ReactDOM.render(<App />, document.getElementByID("root"));
 // }
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+//import * from 'react-dom';
+//import ReactDOM from 'react-dom';
 import Head from 'next/head';
-import render from 'react-dom'
+//import render from 'react-dom'
 import Navbar from '../src/components/navbar'
 import Home from '../src/components/Home/home'
 import Diagnose from "../src/components/Diagnose/diagnose"
 import { Link, BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Component } from 'react';
+
+var ReactDOM = require('react-dom');
 
 
 class Index extends React.Component {
@@ -135,14 +138,14 @@ export default Index;
 //   } else {
 //     console.log("You're not on the browser")
 //   }
-  
-  
+
+
 // //  <Flex height="100vh" alignItems="center" justifyContent="center">
 // //    <Flex direction="column" background="gray.100" p={12} rounded={6} >
 // //     <Heading mb={6}>Log in</Heading>
 // //     <input placeholder="lazar@chakra-ui.com" variant='filled' mb={3} type="email"/>
 // //     <input placeholder="********" variant="filled" mb={6} type="password"/>
-// //     <Button colorScheme = "teal">Log in</Button>   
+// //     <Button colorScheme = "teal">Log in</Button>
 // //    </Flex>
 // //  </Flex>
 // }
@@ -203,4 +206,3 @@ export default Index;
 // import ThreeCol from '../three_col'
 // import ContactForm from '../contact_form'
 // import Carousel from '../carousel'
-

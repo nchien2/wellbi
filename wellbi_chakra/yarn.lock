@@ -393,7 +393,7 @@
 
 "@chakra-ui/react@^1.8.6":
   version "1.8.6"
-  resolved "https://registry.npmjs.org/@chakra-ui/react/-/react-1.8.6.tgz"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/react/-/react-1.8.6.tgz#e37b9df24fa2ec7d91d2baaa00fd617e3a1bd80c"
   integrity sha512-FEh/KG0uPeNOMQuIlyPfGjHvGB7LN1AAhkdFefqzNt0zNy8Giv4p1PKY7wdCh5QEFor++A83L1wIWvTGQVJ2vQ==
   dependencies:
     "@chakra-ui/accordion" "1.4.9"
