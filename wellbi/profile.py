@@ -1,8 +1,8 @@
 import functools
-from . import db_endpoints, __init__
+from wellbi import db_endpoints, __init__
 from flask_wtf import FlaskForm, Recaptcha, RecaptchaField
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from flask import current_app as app
 import flask_login
 from flask_login import login_required
@@ -54,14 +54,14 @@ class User:
 
         
 class loginForm(FlaskForm):
-    uname = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    uname = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(1, 20)])
     submit = SubmitField('Log in')
 
 class signupForm(FlaskForm):
-    uname = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+    uname = StringField('Username', validators=[DataRequired(), Length(1, 20)])
+    password = PasswordField('Password', validators=[DataRequired(), Length(1, 20)])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired(), Length(1, 20)])
     recaptcha = RecaptchaField(validators=[Recaptcha(message="Recaptcha failed. Try again.")])
     submit = SubmitField('Sign up')
 
@@ -98,7 +98,7 @@ def signup():
         # If the user with username already exists, return to signup
         print(id)
         if id:
-            flash('Email address already exists.')
+            flash('Username already exists.')
             return redirect(url_for('profile.signup', type='signup'))
         
         logged_user = User(username)
@@ -107,13 +107,44 @@ def signup():
     return render_template('login.html', form=form, type='signup')
 
 
-@bp.route('/', methods=('GET', 'POST'))
+@bp.route('/display', methods=('GET', 'POST'))
 @login_required
 def display():
     username = flask_login.current_user.username
+    user_dict = db_endpoints.get_user_by_id(username).to_dict()
+    posts = user_dict['posts']
+    comments = user_dict['comments']
+
+    title_list =[]
+    id_list = []
+    for post_ref in posts:
+        post = post_ref.get()
+        if post == None:
+            title_list.append(None)
+            id_list.append(None)
+        else:
+            title_list.append(post.to_dict()['title'])
+            id_list.append(post.id)
+
+    comm_list = []
+    comm_id_list = []
+    for comm_ref in comments:
+        comment = comm_ref.get().to_dict()
+        # print(comment)
+        if comment == None:
+            comm_list.append(None)
+            comm_id_list.append(None)
+        else:
+            comm_list.append(comment['body'])
+            comm_id_list.append(comment['parent-post'])
+
+    return render_template('my-profile.html', username=username, title_list=title_list, id_list=id_list, \
+                            comm_list=comm_list, comm_id_list=comm_id_list)
+
+@bp.route('/<username>', methods=('GET', 'POST'))
+def display_other(username):
     user_obj = db_endpoints.get_user_by_id(username)
     posts = user_obj.to_dict()['posts']
-    print(posts)
 
     title_list =[]
     id_list = []
@@ -121,8 +152,7 @@ def display():
         post = post_ref.get()
         title_list.append(post.to_dict()['title'])
         id_list.append(post.id)
-    print(id_list)
-    print(title_list)
+
     return render_template('profile.html', username=username, title_list=title_list, id_list=id_list)
 
 @bp.route('/logout', methods=['GET'])

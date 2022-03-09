@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <p><h1>{% block title %}Resources{% endblock %}</h1></p>
+{% endblock %}
+
+{% block content %}
+
+<h2>Gonorrhea</h2>
+<p><a href="https://www.mayoclinic.org/diseases-conditions/gonorrhea/symptoms-causes/syc-20351774">Symptoms and Causes</a></p>
+<p><a href="https://www.mayoclinic.org/diseases-conditions/gonorrhea/diagnosis-treatment/drc-20351780">Diagnosis and Treatment</a></p>
+
+  <h3>Enter Zipcode:</h3><br>
+  <form method="POST" action= "{{ url_for('resources.gonorrhea')}}" >
+    {{form.hidden_tag()}}
+
+    {{form.zipcode()}}<br>
+
+    {% if form.errors %}
+      {{ form.errors }}
+    {% endif %}
+    {{form.submit()}} <br>
+  </form><br>
+
+  <p hidden id="myclinics">{{clinics}}</p>
+
+
+
+
+    <h4>Nearest Free and Low Cost Clinics</h4>
+    <div id="map"></div>
+      <script>
+        function initMap() {
+          //0: clinic name, 1: clinic coords, 2: clinic street address, 3: clinic city + zip, 4: clinic url, 5: google maps url
+          var all_clinics = {
+              'Castro-Mission Health Center': [{lat: 37.7631636584137, lng: -122.43202042310821}, "3850 17th St", "San Francisco, CA 94114", "https://sfhealthnetwork.org/primary-care-3/castro-mission-health-center/", "https://www.google.com/maps/place/Castro-Mission+Health+Center/@37.7629686,-122.4339409,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7e1b850da405:0x7297b752598f70bc!8m2!3d37.7629977!4d-122.4320391"],
+              'Lyon-Martin Women’s Health Services': [{lat: 37.769627008041525, lng: -122.4198499752374},"1735 Mission St", "San Francisco, CA 94103", "https://www.healthright360.org/agency/lyon-martin-health-services", "https://www.google.com/maps/place/Lyon-Martin+Health+Services/@37.7693726,-122.4219743,17z/data=!3m1!4b1!4m5!3m4!1s0x8085809f941a51ab:0x2d40c0e8ce3ac376!8m2!3d37.7694045!4d-122.4198473"],
+              'Tom Waddell Health Center': [{lat: 37.779073814363635, lng: -122.41836942751574}, "50 Dr Tom Waddell Pl", "San Francisco, CA 94102", "https://sf.gov/departments/department-public-health", "https://www.google.com/maps/place/Tom+Waddell+Health+Center/@37.7617495,-122.4417223,13.27z/data=!4m9!1m2!2m1!1sTom+Waddell+Health+Center!3m5!1s0x808580995fc5ce29:0xa3672fa2d670435e!8m2!3d37.7783191!4d-122.4184624!15sChlUb20gV2FkZGVsbCBIZWFsdGggQ2VudGVykgEObWVkaWNhbF9jbGluaWM"],
+              'Haight-Ashbury Free Medical Clinic': [{lat: 37.771016131782325, lng: -122.44843816450916}, "558 Clayton St", "San Francisco, CA 94117", "https://www.healthright360.org/agencyhaight-ashbury-free-clinics", "https://www.google.com/maps/place/Haight+Ashbury+Free+Clinics/@37.771525,-122.4420009,15z/data=!4m9!1m2!2m1!1sHaight-Ashbury+Free+Medical+Clinic!3m5!1s0x808587531be33af9:0x42ebdb0a04af99d3!8m2!3d37.7699756!4d-122.4485046!15sCiJIYWlnaHQtQXNoYnVyeSBGcmVlIE1lZGljYWwgQ2xpbmljkgEObWVkaWNhbF9jbGluaWM"],
+              'Mission Neighborhood Health Center': [{lat: 37.765220269982855, lng: -122.41662428341466}, "240 Shotwell St", "San Francisco, CA 94110", "http://www.mnhc.org/", "https://www.google.com/maps/place/Mission+Neighborhood+Health+Center/@37.756856,-122.4217632,15.18z/data=!4m5!3m4!1s0x808f7e24c285a429:0x280fe5f2a140e9cd!8m2!3d37.764599!4d-122.416586"],
+              'Southeast Health Center': [{lat: 37.7261632575225, lng: -122.39228857523872}, "2401 Keith St", "San Francisco, CA 94124", "http://www.sfhealthnetwork.org/primary-care-3/southeast-health-center/", "https://www.google.com/maps/place/Southeast+Health+Center+Clinic/@37.7259087,-122.3944129,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7f184cdc92c9:0xd85b138eca82e5cf!8m2!3d37.7259105!4d-122.3922371"],
+              'Chinatown Public Health Center': [{lat: 37.79745393449752, lng: -122.41150583106013}, "1490 Mason St", "San Francisco, CA 94133", "http://www.sfhealthnetwork.org/primary-care-3/chinatown-public-health-center/", "https://www.google.com/maps/place/Chinatown+Public+Health+Center/@37.7972081,-122.4136838,17z/data=!3m1!4b1!4m5!3m4!1s0x808580f2130c0be3:0x6c6753ee95c86a20!8m2!3d37.7972081!4d-122.4114951"],
+              'North East Medical Services': [{lat: 37.800108351119306, lng: -122.40896287893071}, "1520 Stockton St", "San Francisco, CA 94133", "http://www.nems.org/", "https://www.google.com/maps/place/North+East+Medical+Services+(NEMS)/@37.7999473,-122.410937,17z/data=!3m1!4b1!4m5!3m4!1s0x808580f168e33edb:0xf28a032917d7d108!8m2!3d37.7999366!4d-122.4089698"],
+              'Cole Street Youth Clinic': [{lat: 37.770099563710545, lng: -122.45043984455516}, "555 Cole St", "San Francisco, CA 94117", "http://www.huckleberryyouth.org/", "https://www.google.com/maps/place/Cole+Street+Youth+Clinic/@37.7698706,-122.45265,17z/data=!3m1!4b1!4m5!3m4!1s0x808587524d7bcf2f:0x31819faa4e1e3dd1!8m2!3d37.7698662!4d-122.4504403"],
+              'Sister Mary Philippa Health Center': [{lat: 37.773146543209776, lng: -122.45307070776671}, "2235 Hayes St #5", "San Francisco, CA 94117", "https://www.dignityhealth.org/bayarea/locations/stmarys/services/sister-mary-philippa-health-center", "https://www.google.com/maps/place/Saint+Mary's+Medical+Center+Sister+Mary+Philippa+Health+Center/@37.7727819,-122.4550341,17z/data=!3m1!4b1!4m5!3m4!1s0x8085874eef7c68f3:0x73985129c15bcd4e!8m2!3d37.772952!4d-122.4530617"],
+              'Childrens Health Center at SFGH': [{lat: 37.756585087094145, lng: -122.40427153925992}, "1001 Potrero Ave", "San Francisco, CA 94110", "http://www.sfdph.org/dph/comupg/oprograms/NutritionSvcs/OutpatientNutrition/ONLocations.asp", "https://www.google.com/maps/place/Children's+Health+Center/@37.7558047,-122.4131979,15z/data=!4m9!1m2!2m1!1sAdolescent+Medical+Clinic+at+SFGH!3m5!1s0x808f7e4a6131d2d1:0x5ede8fcb3e532833!8m2!3d37.7558047!4d-122.4044432!15sCiFBZG9sZXNjZW50IE1lZGljYWwgQ2xpbmljIGF0IFNGR0iSARJjaGlsZHJlbnNfaG9zcGl0YWw"],
+              'Family Health Center at SFGH': [{lat: 37.75750031858322, lng: -122.40611502751149}, "995 Potrero Ave", "San Francisco, CA 94110", "https://zuckerbergsanfranciscogeneral.org/location/family-health-center/", "https://www.google.com/maps/place/Family+Health+Center/@37.7573222,-122.4076707,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7e35e4eaa7c7:0x72737b1fdc342fac!8m2!3d37.7573222!4d-122.4061074"],
+              'Native American Health Center': [{lat: 37.76424155557056, lng: -122.41870581571993}, "160 Capp St", "San Francisco, CA 94110", "http://www.nativehealth.org/", "https://www.google.com/maps/place/Native+American+Health+Center+-+160+Capp+St/@37.7640465,-122.4209267,17z/data=!3m2!4b1!5s0x808f7e236719cd03:0x886f957d9d327b14!4m5!3m4!1s0x808f7e2366f171f7:0xa952c0f2fb9051e1!8m2!3d37.7640465!4d-122.418738"],
+              'Potrero Hill Health Center': [{lat: 37.754232430120844, lng: -122.39893124270846}, "1050 Wisconsin St", "San Francisco, CA 94107", "http://www.sfhealthnetwork.org/primary-care-3/potrero-hill-health-center/", "https://www.google.com/maps/place/Potrero+Hill+Health+Center/@37.7540119,-122.4012165,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7fb379fca7c9:0x32bab3fa3ae749ba!8m2!3d37.7540114!4d-122.3989397"],
+              'Women’s Health Center at SFGH': [{lat: 37.754779729781255, lng: -122.40567247282607}, "1001 Potrero Ave", "San Francisco, CA 94110", "http://obgyn.ucsf.edu/san-francisco-general-hospital/sfgh-womens-options-center-6g", "https://www.google.com/maps/place/Women's+Options+Center+At+San+Francisco+General+Hospital/@37.7551699,-122.407314,17z/data=!4m9!1m2!2m1!1sWomen%E2%80%99s+Health+Center+at+SFGH!3m5!1s0x808f7e4a6131d2d1:0xcbb0247b25b07b9a!8m2!3d37.7557265!4d-122.4047381!15sCh9Xb21lbuKAmXMgSGVhbHRoIENlbnRlciBhdCBTRkdIkgEObWVkaWNhbF9jbGluaWM"],
+              'San Francisco Free Clinic': [{lat: 37.78493320501721, lng: -122.47006635804873}, "4900 California St", "San Francisco, CA 94118", "http://www.sffc.org/", "https://www.google.com/maps/place/San+Francisco+Free+Clinic/@37.7847806,-122.4723087,17z/data=!3m1!4b1!4m5!3m4!1s0x80858717fa74c76f:0x5e4c73dcb7a22ba0!8m2!3d37.7847271!4d-122.4700669"],
+              'Hip Hop to Health': [{lat: 37.714599013912654, lng: -122.46688415989787}, "446 Randolph St", "San Francisco, CA 94132", "https://www.sfdph.org/dph/comupg/oservices/medSvs/hlthCtrs/HipHopClinic.asp", "https://www.google.com/maps/place/Hip+Hop+to+Health/@37.7144887,-122.4690514,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7c367f2e596f:0x5da666d33403e66!8m2!3d37.7144161!4d-122.4668535"],
+              'South of Market Health Center': [{lat: 37.77967993403819, lng: -122.40940407523719}, "551-555 Minna St", "San Francisco, CA 94103", "http://www.smhcsf.org/", "https://www.google.com/maps/place/LoPrest+Health+Center/@37.779451,-122.4115284,17z/data=!3m1!4b1!4m5!3m4!1s0x808580824a6d5de9:0x4c6b8c503675e4f6!8m2!3d37.7795084!4d-122.4094129"],
+              'Ocean-Park Health Center': [{lat: 37.7624928425454, lng: -122.48262381571989}, "1351 24th Ave", "San Francisco, CA 94122", "http://sfgov.org/", "https://www.google.com/maps/place/Ocean-Park+Health+Center/@37.7623826,-122.4848447,17z/data=!3m1!4b1!4m5!3m4!1s0x80858770771f5215:0x7dd6128b531ed90e!8m2!3d37.7622531!4d-122.4826491"],
+              'Larkin Street Youth Clinic': [{lat: 37.7882815769076, lng: -122.4192406733899}, "1138 Sutter St", "San Francisco, CA 94109", "https://www.sfdph.org/dph/comupg/oservices/medSvs/hlthCtrs/LarkinStYouthClin.asp", "https://www.google.com/maps/place/1138+Sutter+St,+San+Francisco,+CA+94109/@37.7881205,-122.4214401,17z/data=!3m1!4b1!4m5!3m4!1s0x808580947275a563:0x186bb018074cddac!8m2!3d37.7881205!4d-122.4192514"],
+              'Curry Senior Center': [{lat: 37.782823847673576, lng: -122.4145124598959}, "333 Turk St", "San Francisco, CA 94102", "http://www.curryseniorcenter.org/", "https://www.google.com/maps/place/Curry+Senior+Center/@37.7826458,-122.4166797,17z/data=!3m1!4b1!4m5!3m4!1s0x8085809a998df547:0x785f72ceb96dc0e1!8m2!3d37.7826458!4d-122.414491"],
+              'St. Anthony Free Medical Clinic': [{lat: 37.78241964606527, lng: -122.41320307339001}, "150 Golden Gate Ave 2nd floor", "San Francisco, CA 94102", "https://www.stanthonysf.org/care/", "https://www.google.com/maps/place/St.+Anthony's+Medical+Clinic/@37.7821992,-122.4154025,17z/data=!3m2!4b1!5s0x8085809ac9a8e9ff:0xc3a3933e2254ca54!4m5!3m4!1s0x8085809ac921b05f:0x9404e2dd16eac662!8m2!3d37.7821992!4d-122.4132138"],
+              'Silver Avenue Family Health Center': [{lat: 37.732595039016246, lng: -122.40644320222667}, "1525 Silver Ave", "San Francisco, CA 94134", "http://www.sfhealthnetwork.org/primary-care-3/silver-avenue-family-health-center/", "https://www.google.com/maps/place/Silver+Avenue+Family+Health+Center/@37.7323999,-122.4086319,17z/data=!3m1!4b1!4m5!3m4!1s0x808f7efc146e3b65:0x992fb765d297ea0f!8m2!3d37.7323999!4d-122.4064432"],
+              'Maxine Hall Health Center': [{lat: 37.779490497968744, lng: -122.42917569242543}, "1301 Pierce St", "San Francisco, CA 94115", "http://www.sfhealthnetwork.org/primary-care-3/maxine-hall-health-center/", "https://www.google.com/maps/place/Maxine+Hall+Health+Center/@37.7794142,-122.431182,17z/data=!3m1!4b1!4m5!3m4!1s0x808580b75b2d3bb7:0x23c722bc4eb99549!8m2!3d37.7792374!4d-122.429118"]
+
+          };
+          var closest = document.getElementById('myclinics').innerHTML;
+          closest = closest.replace('[', '');
+          closest = closest.replace(']', '');
+          closest = closest.replaceAll("'", '');
+          closest = closest.split(', ');
+          const isEmpty = Object.keys(closest).length == 1;
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: all_clinics['Castro-Mission Health Center'][0] //hard coded location center for blank map
+          });
+
+          if (!isEmpty) {
+            for(i = 0; i < closest.length; i++) {
+              var marker = new google.maps.Marker({
+                position: all_clinics[closest[i]][0],
+                map: map,
+                title: closest[i],
+                id: i
+              });
+              var content = '<p>' + '<strong>' + closest[i] + '</strong>' + '<br />' +
+                      all_clinics[closest[i]][1] + '<br />' +
+                      all_clinics[closest[i]][2] + '<br />' +
+                      '<a href='+ all_clinics[closest[i]][3] + '>Visit Clinic Website</a>' + '<br />' +
+                      '<a href='+ all_clinics[closest[i]][4] + '>View on Google Maps</a>' + '</p>';
+              var infowindow = new google.maps.InfoWindow();
+              google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                  return function(){
+                      infowindow.setContent(content);
+                      infowindow.open(map, marker);
+                  };
+
+              })(marker, content, infowindow));
+            }
+
+          }
+          }
+
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDscPs2_G9qXNUvnp_WQ3FqUJXFfCT9yRQ&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v4_cABCDE" async defer></script>
+  {% endblock %}

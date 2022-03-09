@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "stanford-wellbi",
+  "private_key_id": "77eb49da97f2aca5cf841aefce606521751cb9a9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCp08uaZytOhKyd\nsnQT6clzgSux8546qzgDCVBwGigGTx++qO8xbKSwMbfJ+Thr6O0x/4t1/zrOX1XT\niv8tjxq25LHZmWf1c/S7nv/MuntK5j9uY7qquIIEBozsK50Ik//gv8FIhdySHWhC\njqQaVHp3/UMaD3VruSNLCLF00ndGc137e3GMMQHJD/aw9PUq/KG5tU03gjQbeXlM\ntDlzoX2eyISJKDWlkQoMFcxRGAkhll65JsMIRKWg9LjN1C9fnzi6/zT5JW8W9JrA\nGXAVwt3bvX+mgKzBmfp8d+symXz31sOrg9Hfy04hWT386zgTp+7zhy08V4nTVV/B\nmEri3F+VAgMBAAECggEAGPtLWYiwoam5nK76DU3YMPIA4/nyvi2enS+7Eep/FcKA\n6HKAURRqu3Js1zyedJ08exzcvnxPgbkbbnVlaSXCZ8IHeXtsA/rNNuZCObL63P82\nuH3aIS/oDECMbVdTD8Z5nu2GOK1cT3Ac/KFv+WGQ7GKogsZgXvrKesiqFgW5vvaP\nMexMYr24lybe2Ao+VBr7odKVZ95yg5zGeEZbe4AzmG0Ez3+AKuNeyzFSj/h3hxNZ\nZ7hbGyuduSiO1EwEg/ecoRxaaz9cWzinSUNF7vYGMhb8CSK5ve+iEbwxiqowFYKS\nOUB87SwWC15MPGc9ciJBzfyi1m/PgcEh0oSGdNj/9wKBgQDVVenHtYLs3c+aJijn\n2KUAIJrSTi92x0gS8opcGLKzK4ZMwodiqEypILo9F68CvrR02ciY6k+Y2SIiuiVz\ncqR6a8vyKtgtjkOQo5xrawS1gV/Tf3a0Yq3pz2ehU2cdAjuQpNL77VBOuI7EOyFo\nc9rxsVvn/ZTd7xaqlG/maX/svwKBgQDLymaEaKXk4o5JRBEEltTsScQGgqq322bJ\nJbxps0MLz6Oj/FA9XsLu5F7mCXBC2ZyNqOJRe8ugpIzycBH5R9UxTF9k3AlQLTlN\n7x5Atsy7Ygx3DaVRbkYm0BUMOqGvbqNfN76t4qCDfkqE8cXwJMtUzXnqrbp0TDdI\nnfdHxZnEqwKBgD2vl+edPnxLLuo9uno/lIZS5zGEVgkcWmTQKN20boeMQEsVvJv0\nWiZVRkTAAmTiy7818eD1b4qczlgIRyf4sEKNxO0DInsZtcOu613MFhJ9lD3Nj39d\nQThoNmjZeulSafLLFg6uchgxGWb4ShKv3VEhnZeZJWB+76jnPuv6+Xh1AoGBAMTe\nZ4D8U1602n2+yq3jRBhr/nnHm0J4KmihEs4NxfRQB6awZZeTxr7fUSnq7k82R/21\nq8TJ0eIDdMH0L/jgQv0X6YPW6QxSU+yM1m3v6gIPazlLrmvnGs/97odc0LtYJ20h\nvgvfRe8hfr3FjtE5yk/HHELwx5H32uRE7hCgvLZ3AoGBALwdPQJ7DRUP/P6cGvQq\nMI2X7thj5pWfP1nXahnsM9zS5vW8aN5gL2MsN/s6x2KEoA975PdhG1Z3xnJI18ng\nDIZcFlYYC3+ExC1I7xnAVqTaW/gHJgGssQstTo6+e5KMSMo3Lo87m3XHeAmnWgtq\nItAEh1eLFmNqRG9jFTxeqrno\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-oqu50@stanford-wellbi.iam.gserviceaccount.com",
+  "client_id": "103300868051321751194",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-oqu50%40stanford-wellbi.iam.gserviceaccount.com"
+}
