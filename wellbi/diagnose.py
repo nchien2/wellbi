@@ -60,107 +60,129 @@ def results():
                 for index, row in df.iterrows():
                     symptoms = row["Symptoms"]
                     if symptom in symptoms:
-                        disease_match[row["Disease"]] += 1
+                        disease_match[row["Disease"]] += 1 / len(row["Symptoms"].strip("[]").split(", "))
                         found_symptom = True
-
-    sorted_disease_match = sorted(disease_match.items(), key = operator.itemgetter(1), reverse=True)
-
-
-    curr_user_path=Path(__file__).parent.absolute()
-    diagnosis = sorted_disease_match[0][0]
-    common_symptoms = ""
-    html = """
-    {% extends 'base.html' %}
-
-    {% block header %}
-      <h1 class = "header">{% block title %}Diagnose Me{% endblock %}</h1>
-    {% endblock %}
-
-    {% block content %}
-    """
-    if found_symptom == False:
-        html += """
-        <p> You didn't check any symptoms! Please restart the diagnosis process.  </p>
-        """
-    else:
 
 
         sorted_disease_match = sorted(disease_match.items(), key = operator.itemgetter(1), reverse=True)
+        other_possible_diseases = ""
 
+        index = 0
+        for each in sorted_disease_match:
+            if each[1] > 0.15 and index > 0:
+                other_possible_diseases += "<p> &ensp; " + each[0] + "</p>"
+            index += 1
 
         curr_user_path=Path(__file__).parent.absolute()
-        diagnosis = sorted_disease_match[0][0]
-        femalemalesymptoms = df[df["Disease"] == diagnosis]["Symptoms"]
-        common_symptoms = ""
-        for each in femalemalesymptoms:
-            each = each.strip("[]").lower().split(", ")
-            for i in range(len(each)):
-                if i == len(each) - 1:
-                    common_symptoms += "and " + each[i]
-                else:
-                    common_symptoms += each[i] + ", "
+        html = """
+        {% extends 'base.html' %}
+    
+        {% block header %}
+          <h1 class = "header">{% block title %}Diagnose Me{% endblock %}</h1>
+        {% endblock %}
+    
+        {% block content %}
+        """
+        if found_symptom == False:
+            html += """
+            <p> You didn't check any symptoms! Please restart the diagnosis process.  </p>
+            """
+        else:
 
-        html += f"""
-          <p> Please note: The results may not include your complete medical history and are provided solely for informational purposes and is not a substitute for professional medical advice. 
-          </p>
-          <div class = "results">
-            <p><b> </b>From the symptoms you inputted it appears you may have {diagnosis}! 
-            </p>
-            <p> {diagnosis} is common in both men and women. 
-            </p>
-            <p>
-            Common symptoms include {common_symptoms}.
-            </p>
-            <div class = "recommendation">
-              <p> We recommend you make an appointment to see a medical professional.
+
+            curr_user_path=Path(__file__).parent.absolute()
+            diagnosis = sorted_disease_match[0][0]
+            female_symptoms = df[(df["Disease"] == diagnosis) & (df["Gender"] == "Female")]["Symptoms"]
+            common_f_symptoms = ""
+            for each in female_symptoms:
+                each = each.strip("[]").lower().split(", ")
+                for i in range(len(each)):
+                    if i == len(each) - 1:
+                        common_f_symptoms += "and " + each[i]
+                    else:
+                        common_f_symptoms += each[i] + ", "
+
+            male_symptoms = df[(df["Disease"] == diagnosis) & (df["Gender"] == "Male")]["Symptoms"]
+            common_m_symptoms = ""
+            for each in male_symptoms:
+                each = each.strip("[]").lower().split(", ")
+                for i in range(len(each)):
+                    if i == len(each) - 1:
+                        common_m_symptoms += "and " + each[i]
+                    else:
+                        common_m_symptoms += each[i] + ", "
+
+            html += f"""
+              <p> Please note: The results may not include your complete medical history and are provided solely for informational purposes and is not a substitute for professional medical advice. 
               </p>
-              <p><a href="{"{{"} url_for('diagnose.resources'){"}}"}">Find Resources on {diagnosis}</a>
+              <div class = "results">
+                <p><b> </b>From the symptoms you inputted it appears you may have {diagnosis}! 
+                </p>
+                <p> {diagnosis} is common in both men and women. 
+                </p>
+                <p>
+                Common symptoms for females include {common_f_symptoms}.
+                </p>
+                <p>
+                Common symptoms for males include {common_m_symptoms}.
+                </p>
+                <div class = "recommendation">
+                  <p> We recommend you make an appointment to see a medical professional.
+                  </p>
+                  <p><a href="{"{{"} url_for('diagnose.resources'){"}}"}">Find Resources on {diagnosis}</a>
+                  
+                  </p>
+                </div>
+              </div>
+              </body>
+            </div>"""
+
+
+            if len(other_possible_diseases) != 0:
+                html += f"""
+                        <p>
+                        Other diseases with your symptoms may include: {other_possible_diseases}
+                        </p>
+                        <p><a href="{"{{"} url_for('diagnose.resources'){"}}"}">Find Additional Resources</a>
+
+                        """
+            html += f""" 
+
+            <div class="Forums">
+              <h4 class="header">Forums</h4>
+              <p><a href="{"{{"} url_for('forum.search',tag='{diagnosis}'){"}}"}">Connect with Others about {diagnosis}</a>
               </p>
             </div>
             <div class="Feedback">
-              <h3 class="header">Feedback</h3>
-              <p> Was this information helpful?
-              </p>
-              <head>
-              <meta charset="UTF-8">
-              <link rel="stylesheet" type="text/css" href="style.css">
-              <title>Star Rating</title>
-              </head>
-        
-              <body>
-              <div class="rate">
-                <input type="radio" id="star5" name="rate" value="5" />
-                <label for="star5" title="text">5 stars</label>
-                <input type="radio" id="star4" name="rate" value="4" />
-                <label for="star4" title="text">4 stars</label>
-                <input type="radio" id="star3" name="rate" value="3" />
-                <label for="star3" title="text">3 stars</label>
-                <input type="radio" id="star2" name="rate" value="2" />
-                <label for="star2" title="text">2 stars</label>
-                <input type="radio" id="star1" name="rate" value="1" />
-                <label for="star1" title="text">1 star</label>
-              </div>
-              </body>
-            </div>
-            <div class="Forums">
-              <h4 class="header">Forums</h4>
-              <p><a href="{"{{"} url_for('diagnose.forums'){"}}"}">Connect with Others</a>
-              </p>
-            </div>
-
+                  <h4 class="header">Feedback</h4>
+                  <p> Was this information helpful?
+                  </p>
+                  <head>
+                  <meta charset="UTF-8">
+                  <link rel="stylesheet" type="text/css" href="style.css">
+                  <title>Star Rating</title>
+                  </head>
+            
+                  <body>
+                  <div class="rate">
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                  </div>
+                  </body>
+                </div>
           </div>
-          </body>
-        </div>
-        <div class="Forums">
-          <h4 class="header">Forums</h4>
-          <p><a href="{"{{"} url_for('diagnose.forums'){"}}"}">Connect with Others</a>
-          </p>
-        </div>
-      </div>
-    """
-    html += """
-    {% endblock %}
-    """
+        """
+        html += """
+        {% endblock %}
+        """
     file = open(str(curr_user_path) + "/templates/results.html", "w")
     file.write(html)
     file.close()
