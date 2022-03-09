@@ -251,3 +251,15 @@ ul{
   align-items:center;
   width:60%;
 }
+
+.form-signin {
+  display: -ms-flexbox;
+  align-items: center;
+  -ms-flex-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  margin: auto;
+}
