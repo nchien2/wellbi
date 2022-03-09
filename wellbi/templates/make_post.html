@@ -4,12 +4,12 @@
 {% block header %}
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="{{url_for('static', filename='tag_helpers.js')}}"></script>
-
-  <h1>{% block title %} Wellbi Forum {% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-
+<div class="form-signin">
+<h1>{% block title %} Wellbi Forum {% endblock %}</h1><br>
+<h2>Make a new post:</h2>
 {% with messages = get_flashed_messages() %}
 {% if messages %}
     <div class="notification is-danger">
@@ -45,4 +45,5 @@
   {{form.submit(class_="btn btn-primary")}}
 </form>
 <div id='count_div', style='display: none;'>0</div>
+</div>
 {% endblock %}
