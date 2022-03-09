@@ -69,9 +69,8 @@ def make_post(title, content, username, tags):
     user_ref.update({u'posts': firestore.ArrayUnion([postref])})
 
     for tag in tags:
-        print(tag)
-        # if tag == None:
-        #     continue
+        if not tag:
+            continue
         tag_list = tag_coll.where('value', '==', tag).get() # .stream() is preferred but doesn't work - look into later
         print(tag_list)
         if not tag_list:
@@ -144,10 +143,13 @@ def get_top_posts():
 
 
 def get_posts_with_tag(tag):
+    print(tag)
     tag_list = tag_coll.where('value', '==', tag).stream()
+    print(tag)
     title_list = []
     for tag_obj in tag_list:
         id_list = tag_obj.to_dict()['posts']
+        print(id_list)
         title_list = [posts.document(id).get().to_dict()['title'] for id in id_list]
         return id_list, title_list
 
