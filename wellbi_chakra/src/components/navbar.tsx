@@ -24,12 +24,13 @@ import {
   } from '@chakra-ui/icons';
 
   import theme from '../../src/theme'
-
+  import { useRouter } from 'next/router';
 
   
   export default function WithSubnavigation() {
-    const { isOpen, onToggle } = useDisclosure();
 
+    const { isOpen, onToggle } = useDisclosure();
+    const router = useRouter();
     const smallLogo = '/images/logo_small.jpg'
   
     return (
@@ -58,7 +59,7 @@ import {
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Image src={smallLogo} alt="Wellbi Logo-small" boxSize='150px' fallbackSrc='https://via.placeholder.com/150' />
+            <Image src={smallLogo} rounded={"xl"} alt="Wellbi Logo-small" boxSize='150px' fallbackSrc='https://via.placeholder.com/150' />
         
             
             {/* <Text
@@ -120,7 +121,6 @@ import {
             <Popover trigger={'hover'} placement={'bottom-start'}>
               <PopoverTrigger>
                 <Link
-                  
                   p={2}
                   href={navItem.href ?? '#'}
                   fontSize={'sm'}
@@ -263,40 +263,31 @@ import {
   const NAV_ITEMS: Array<NavItem> = [
     {
       label: 'Home',
-      href: '#',
+      href: '/',
     },
     {
       label: 'Diagnose Me',
-      children: [
-        {
-          label: 'Explore Conditions',
-          href: '#',
-        },
-        {
-          label: 'Male/Female Symptoms?',
-          subLabel: 'Up-and-coming Designers',
-          href: '#',
-        },
-      ],
+      href: '/diagnose'
     },
     {
       label: 'Forum',
+      href: '/forum',
       children: [
         {
-          label: 'Start a Post',
+          label: 'New Post',
           // subLabel: 'Find your dream design job',
-          href: '#',
+          href: '/forum/new',
         },
         {
           label: 'Search for Post',
           //subLabel: 'An exclusive list for contract work',
-          href: '#',
+          href: '/forum/search',
         },
       ],
     },
     {
       label: 'Resources',
-      href: '#',
+      href: '/resources',
     },
   ];
   
