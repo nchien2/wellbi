@@ -5,20 +5,19 @@
          <div class="app-text">
              <h3>creating community for sexual health</h3>
              <h1>How can Wellbi<br>help you today?</h1>
-             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+             <p>Find out about what Wellbi can do. Click to get a diagnosis or explore general resources.</p>
 
              <div class="btn-group">
-                 <div class="signup-btn">Sign up now</div>
-                 <div class="play-btn">
-                     <div class="play-btn-inner">
-                         <i class="fa fa-play"></i>
-                     </div>
-                     <span>How it works</span>
+                 <div class="home-diagnose-btn">
+                   <a href="{{ url_for('diagnose.input') }}">Diagnose Me</a>
+                 </div>
+                 <div class="home-resources-btn">
+                   <a href="{{ url_for('resources.clinics') }}">Resources</a>
                  </div>
              </div>
          </div>
          <div class="app-picture">
-             <img src="/static/10.jpg">
+             <img src="/static/10.jpg" width=500 height=400>
          </div>
      </div>
 
@@ -26,18 +25,18 @@
          <ul>
              <li>
                  <img src="/static/1.png">
-                 <h1>SEO Consultancy</h1>
-                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                 <h1>Find Community</h1>
+                 <p>Find support and togetherness with our community forum. Share experiences or helpful tips or inquire about any ailments you're facing.</p>
              </li>
              <li>
                  <img src="/static/2.png">
-                 <h1>Competitor Analysis</h1>
-                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                 <h1>Get Diagnostic Info</h1>
+                 <p>Take control of your knowledge. Empower yourself and others with information about symptoms and treatments.</p>
              </li>
              <li>
                  <img src="/static/3.png">
-                 <h1>Social Media Marketing</h1>
-                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                 <h1>Access Resources</h1>
+                 <p>Empower yourself and others. Discover free and low-cost clinics near you.</p>
              </li>
          </ul>
      </div>
