@@ -38,7 +38,7 @@ ul{
 
 .header{
   width: 100%;
-  height: 60vh;
+  height: 20vh;
   background-color: #fff;
   position: relative;
 }
@@ -82,10 +82,10 @@ ul{
 }
 
 .banner{
-    width: 80%;
+    width: 90%;
     height: 70%;
     position: absolute;
-    top: 25%;
+    top: 100%;
     left: 150px;
     color: #fff;
 }
@@ -128,7 +128,7 @@ ul{
     position: relative;
 }
 
-.btn-group .signup-btn{
+.btn-group .home-diagnose-btn{
     cursor: pointer;
     display: block;
     color: #000;
@@ -140,9 +140,17 @@ ul{
     padding: 15px 50px;
 }
 
-.btn-group .play-btn{
+.btn-group .home-resources-btn{
     margin-left: 40px;
-    display: inline-flex;
+    cursor: pointer;
+    display: block;
+    color: #000;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 32px;
+    background-color: #006abb;
+    padding: 15px 50px;
 }
 
 .btn-group span{
@@ -153,26 +161,14 @@ ul{
     cursor: pointer;
 }
 
-.play-btn-inner{
-    height: 50px;
-    width: 50px;
-    border: 2px solid transparent;
-    border-radius: 50%;
-    background-color: #000;
-}
 
-.play-btn-inner i{
-    padding: 15px 19px;
-    font-size: 16px;
-    cursor: pointer;
-}
 
 .about-services{
     position: absolute;
     top: 125%;
     width: 100%;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 425px;
     padding: 0 300px;
 }
 
