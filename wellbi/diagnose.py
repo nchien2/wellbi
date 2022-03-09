@@ -84,9 +84,7 @@ def results():
         """
     else:
 
-
         sorted_disease_match = sorted(disease_match.items(), key = operator.itemgetter(1), reverse=True)
-
 
         curr_user_path=Path(__file__).parent.absolute()
         diagnosis = sorted_disease_match[0][0]
@@ -142,18 +140,13 @@ def results():
               </div>
               </body>
             </div>
-            <div class="Forums">
-              <h4 class="header">Forums</h4>
-              <p><a href="{"{{"} url_for('diagnose.forums'){"}}"}">Connect with Others</a>
-              </p>
-            </div>
 
           </div>
           </body>
         </div>
         <div class="Forums">
           <h4 class="header">Forums</h4>
-          <p><a href="{"{{"} url_for('diagnose.forums'){"}}"}">Connect with Others</a>
+          <p><a href="{"{{"} url_for('forum.search',tag='{diagnosis}'){"}}"}">Connect with Others about {diagnosis}</a>
           </p>
         </div>
       </div>
