@@ -1,12 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3> Welcome, {{ username }}! </h3>
-<a href="{{url_for('profile.logout')}}" >Logout </a> <br><br>
+<h3> {{ username }}'s Profile </h3>
 <h5> Posts: </h5>
 {% for i in range(title_list | length) %}
-<a href= "{{url_for('forum.show_post', post_id=id_list[i])}}"> {{title_list[i]}} </a><br>
+    {% if id_list[i] != None %}
+        <a href= "{{url_for('forum.show_post', post_id=id_list[i])}}"> {{title_list[i]}} </a><br>
+    {% else %}
+        [Post Deleted] <br>
+    {% endif %}
 {% endfor %}
+<br>
 
+<h5> Comments: </h5>
+{% for i in range(comm_list | length) %}
+    {% if comm_list[i] != None %}
+        <a href= "{{url_for('forum.show_post', post_id=comm_id_list[i])}}"> {{comm_list[i]}} </a>
+        <button id="delete-button" type="button"> Delete </button><br>
+    {% else %}
+        [Comment Deleted] <br>
+    {% endif %}
+{% endfor %}
 
 {% endblock %}
