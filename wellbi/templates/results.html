@@ -1,56 +1,71 @@
 
-    {% extends 'base.html' %}
-
-    {% block header %}
-      <h1 class = "header">{% block title %}Diagnose Me{% endblock %}</h1>
-    {% endblock %}
-
-    {% block content %}
+        {% extends 'base.html' %}
     
-      <p> Please note: The results may not include your complete medical history and are provided solely for informational purposes and is not a substitute for professional medical advice.
-      </p>
-      <div class = "results">
-        <p><b> Oh no! </b>From the symptoms you inputted it appears you may have Chlamydia!
-        </p>
-        <p> Chlamydia is common in both men and women.
-        </p>
-        <div class = "recommendation">
-          <p> We recommend you make an appointment to see a medical professional.
-          </p>
-          <p><a href="{{ url_for('diagnose.resources', diagnosis = 'Chlamydia')}}">Find Resources on Chlamydia</a>
-          </p>
-        </div>
-        <div class="Feedback">
-          <h3 class="header">Feedback</h3>
-          <p> Was this information helpful?
-          </p>
-          <head>
-          <meta charset="UTF-8">
-          <link rel="stylesheet" type="text/css" href="style.css">
-          <title>Star Rating</title>
-          </head>
+        {% block header %}
+          <h1 class = "header">{% block title %}Diagnose Me{% endblock %}</h1>
+        {% endblock %}
+    
+        {% block content %}
+        
+              <p> Please note: The results may not include your complete medical history and are provided solely for informational purposes and is not a substitute for professional medical advice. 
+              </p>
+              <div class = "results">
+                <p><b> </b>From the symptoms you inputted it appears you may have Gonorrhea! 
+                </p>
+                <p> Gonorrhea is common in both men and women. 
+                </p>
+                <p>
+                Common symptoms for females include cloudy/yellow vaginal discharge, abdominal or pelvic pain, irregular bleeding, and painful or more frequent urination.
+                </p>
+                <p>
+                Common symptoms for males include pus-like discharge from the tip of the penis, pain or swelling in one testicle, and pain or discomfort with urination.
+                </p>
+                <div class = "recommendation">
+                  <p> We recommend you make an appointment to see a medical professional.
+                  </p>
+                  <p><a href="{{ url_for('diagnose.resources')}}">Find Resources on Gonorrhea</a>
+                  
+                  </p>
+                </div>
+              </div>
+              </body>
+            </div>
+                        <p>
+                        Other diseases with your symptoms may include: <p> &ensp; Chlamydia</p><p> &ensp; Trichomoniasis</p><p> &ensp; Syphillis</p>
+                        </p>
+                         
 
-          <body>
-          <div class="rate">
-            <input type="radio" id="star5" name="rate" value="5" />
-            <label for="star5" title="text">5 stars</label>
-            <input type="radio" id="star4" name="rate" value="4" />
-            <label for="star4" title="text">4 stars</label>
-            <input type="radio" id="star3" name="rate" value="3" />
-            <label for="star3" title="text">3 stars</label>
-            <input type="radio" id="star2" name="rate" value="2" />
-            <label for="star2" title="text">2 stars</label>
-            <input type="radio" id="star1" name="rate" value="1" />
-            <label for="star1" title="text">1 star</label>
+            <div class="Forums">
+              <h4 class="header">Forums</h4>
+              <p><a href="{{ url_for('forum.search',tag='Gonorrhea')}}">Connect with Others about Gonorrhea</a>
+              </p>
+            </div>
+            <div class="Feedback">
+                  <h4 class="header">Feedback</h4>
+                  <p> Was this information helpful?
+                  </p>
+                  <head>
+                  <meta charset="UTF-8">
+                  <link rel="stylesheet" type="text/css" href="style.css">
+                  <title>Star Rating</title>
+                  </head>
+            
+                  <body>
+                  <div class="rate">
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                  </div>
+                  </body>
+                </div>
           </div>
-          </body>
-        </div>
-        <div class="Forums">
-          <h4 class="header">Forums</h4>
-          <p><a href="{{ url_for('diagnose.forums')}}">Connect with Others</a>
-          </p>
-        </div>
-      </div>
-    
-    {% endblock %}
-    
+        
+        {% endblock %}
+        
