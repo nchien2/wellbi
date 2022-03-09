@@ -1,13 +1,11 @@
 $(document).ready(function() {
     $('.like_button').click(function(ev){
         var id = $(ev.currentTarget).attr('data-id');
-        countEle = $(ev.currentTarget)[0].nextSibling
-        if($(this)[0].classList.contains('upvote_button')){
-            countEle.nodeValue = Number(countEle.nodeValue) + 1
-            $(this)[0].textContent='Unlike'
+        var count = $(this)[0].textContent;
+        if($(this)[0].classList.contains('upvote_button')){ 
+            $(this)[0].innerHTML='<i class="bi bi-hand-thumbs-up-fill"></i> ' + (Number(count) + 1);
         }else{
-            countEle.nodeValue = Number(countEle.nodeValue) - 1
-            $(this)[0].textContent='Like'
+            $(this)[0].innerHTML='<i class="bi bi-hand-thumbs-up"></i> ' + (Number(count) - 1);
         }
 
         $(this).toggleClass('upvote_button');
@@ -21,15 +19,13 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('.comment_like').click(function(ev){
         var id = $(ev.currentTarget).attr('data-id');
-        countEle = $(ev.currentTarget)[0].nextSibling
-        if($(this)[0].classList.contains('upvote_button')){
-            countEle.nodeValue = Number(countEle.nodeValue) + 1
-            $(this)[0].textContent='Unlike'
+        var count = $(this)[0].textContent;
+        console.log(count)
+        if($(this)[0].classList.contains('upvote_button')){ 
+            $(this)[0].innerHTML='<i class="bi bi-hand-thumbs-up-fill"></i> ' + (Number(count) + 1);
         }else{
-            countEle.nodeValue = Number(countEle.nodeValue) - 1
-            $(this)[0].textContent='Like'
+            $(this)[0].innerHTML='<i class="bi bi-hand-thumbs-up"></i> ' + (Number(count) - 1);
         }
-
         $(this).toggleClass('upvote_button');
         $(this).toggleClass('downvote_button');
         $.get( "/forum/comment/like/" + id, function( data ) {

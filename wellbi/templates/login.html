@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Welcome!
+<link href="../static/signin.css" rel="stylesheet">
+<div class="text-center form-signin">
+<h1 class="h3 mb-3 font-weight-normal">Welcome!</h1>
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
@@ -14,17 +16,16 @@ Welcome!
 {% endif %}
 {% endwith %}
 
-<form method="POST"  >
+<form method="POST" class="form-signin">
     {{form.hidden_tag()}}
-    {{form.uname.label()}}
-    {{form.uname()}}<br>
-
-    {{form.password.label()}}
-    {{form.password()}}<br>
+    
+    <!-- <label for="inputUser" class="sr-only">{{form.uname.label()}}</label> -->
+    {{form.uname(id="inputUser", class_="form-control", placeholder="Username")}}<br>
+    {{form.password(id="inputPassword", class_="form-control",placeholder="Password")}}<br>
 
     {% if type=='signup' %}
-        {{form.password2.label()}}
-        {{form.password2()}}<br>
+        <!-- {{form.password2.label()}} -->
+        {{form.password2(id="confirmPassword", class_="form-control",placeholder="Confirm Password")}}<br>
 
         {{form.recaptcha}}<br>
         {% for error in form.recaptcha.errors %}
@@ -35,7 +36,7 @@ Welcome!
     {% for att in form.errors %}
     Error in {{att}}: {{ form.errors[att][0] }} <br>
     {% endfor %}
-    {{form.submit()}}
+    {{form.submit(class_="btn btn-lg btn-primary btn-block")}}
 </form>
 {% if type == 'login' %}
 Don't have an account? <a href="{{url_for('profile.signup')}}">Create one</a>
@@ -43,5 +44,5 @@ Don't have an account? <a href="{{url_for('profile.signup')}}">Create one</a>
 Already have an account? <a href="{{url_for('profile.login')}}">Login</a>
 {% endif %}
 
-
+</div>
 {% endblock %}
