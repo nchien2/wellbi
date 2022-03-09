@@ -71,7 +71,15 @@ def results():
 
         curr_user_path=Path(__file__).parent.absolute()
         diagnosis = sorted_disease_match[0][0]
+        femalemalesymptoms = df[df["Disease"] == diagnosis]["Symptoms"]
         common_symptoms = ""
+        for each in femalemalesymptoms:
+            each = each.strip("[]").lower().split(", ")
+            for i in range(len(each)):
+                if i == len(each) - 1:
+                    common_symptoms += "and " + each[i]
+                else:
+                    common_symptoms += each[i] + ", "
 
         html += f"""
           <p> Please note: The results may not include your complete medical history and are provided solely for informational purposes and is not a substitute for professional medical advice. 
@@ -79,7 +87,10 @@ def results():
           <div class = "results">
             <p><b> </b>From the symptoms you inputted it appears you may have {diagnosis}! 
             </p>
-            <p> {diagnosis} is common in both men and women.
+            <p> {diagnosis} is common in both men and women. 
+            </p>
+            <p>
+            Common symptoms include {common_symptoms}.
             </p>
             <div class = "recommendation">
               <p> We recommend you make an appointment to see a medical professional.
