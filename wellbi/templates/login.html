@@ -7,7 +7,7 @@ Welcome!
 {% if messages %}
     <div class="notification is-danger">
         {{ messages[0] }}
-        {% if messages[0] == 'Username already exists.' %} 
+        {% if messages[0] == 'Username already exists.' %}
           Go to <a href="{{ url_for('profile.login') }}"> login page</a>.<br>
         {% endif %}
     </div>
