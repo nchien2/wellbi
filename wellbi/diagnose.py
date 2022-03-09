@@ -69,7 +69,7 @@ def results():
 
         index = 0
         for each in sorted_disease_match:
-            if each[1] > 0.15 and index > 0:
+            if each[1] > 0.05 and index > 0:
                 other_possible_diseases += "<p> &ensp; " + each[0] + "</p>"
             index += 1
 
@@ -120,12 +120,21 @@ def results():
                 </p>
                 <p> {diagnosis} is common in both men and women. 
                 </p>
-                <p>
-                Common symptoms for females include {common_f_symptoms}.
-                </p>
-                <p>
-                Common symptoms for males include {common_m_symptoms}.
-                </p>
+                <p>"""
+            if common_f_symptoms != common_m_symptoms:
+                html+=f"""
+                    Common symptoms for females include {common_f_symptoms}.
+                    </p>
+                    <p>
+                    Common symptoms for males include {common_m_symptoms}.
+                    </p>"""
+            else:
+                html+=f"""
+                    Common symptoms for {diagnosis} include {common_f_symptoms}.
+                    </p>
+
+            """
+            html += f"""
                 <div class = "recommendation">
                   <p> We recommend you make an appointment to see a medical professional.
                   </p>
@@ -141,7 +150,7 @@ def results():
             if len(other_possible_diseases) != 0:
                 html += f"""
                         <p>
-                        Other diseases with your symptoms may include: {other_possible_diseases}
+                        Other disease(s) that match your symptoms may include: {other_possible_diseases}
                         </p>
                         <p><a href="{"{{"} url_for('diagnose.resources'){"}}"}">Find Additional Resources</a>
 
@@ -155,16 +164,17 @@ def results():
             </div>
             <div class="Feedback">
                   <h4 class="header">Feedback</h4>
-                  <p> Was this information helpful?
-                  </p>
-                  <head>
-                  <meta charset="UTF-8">
-                  <link rel="stylesheet" type="text/css" href="style.css">
-                  <title>Star Rating</title>
-                  </head>
+
             
                   <body>
-                  <div class="rate">
+                    <div class="rate" id="feedback">
+                    <p> Was this information helpful?
+                    </p>
+                    <head>
+                    <meta charset="UTF-8">
+                    <link rel="stylesheet" type="text/css" href="style.css">
+                    <title>Star Rating</title>
+                    </head>
                     <input type="radio" id="star5" name="rate" value="5" />
                     <label for="star5" title="text">5 stars</label>
                     <input type="radio" id="star4" name="rate" value="4" />
@@ -175,7 +185,14 @@ def results():
                     <label for="star2" title="text">2 stars</label>
                     <input type="radio" id="star1" name="rate" value="1" />
                     <label for="star1" title="text">1 star</label>
+                  <button id="button" onclick="submitRating()">Submit</button>
                   </div>
+                  <script>
+                            function submitRating() {"{"}
+                                var feedback = document.getElementById("feedback");
+                                feedback.innerHTML = "Thanks for submitting your feedback!"
+                            {"}"}
+                  </script>
                   </body>
                 </div>
           </div>
