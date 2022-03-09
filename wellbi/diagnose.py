@@ -37,7 +37,7 @@ def resources():
 @bp.route('/results', methods=('GET', 'POST'))
 def results():
     curr_user_path = Path(__file__).parent.absolute()
-
+    found_symptom = False
     if request.method == 'POST':
         df = pd.read_csv(str(curr_user_path) + "/static/Disease_Symptoms.csv")
         all_symptoms = set()
@@ -53,6 +53,7 @@ def results():
         for index, row, in df.iterrows():
             disease_match[row["Disease"]] = 0
 
+
         for symptom in all_symptoms:
             checked = request.form.get(symptom)
             if checked:
@@ -60,6 +61,7 @@ def results():
                     symptoms = row["Symptoms"]
                     if symptom in symptoms:
                         disease_match[row["Disease"]] += 1
+                        found_symptom = True
 
     sorted_disease_match = sorted(disease_match.items(), key = operator.itemgetter(1), reverse=True)
 
