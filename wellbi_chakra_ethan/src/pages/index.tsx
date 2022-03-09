@@ -2,7 +2,24 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Navbar from '../common/Navbar'
 
+
+export default function Home() {
+  return (
+    <div>
+      <Head>
+        <title>QuizApp</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main><Navbar /></main>
+      <footer></footer>
+    </div>
+  );
+}
+
+
+/* this is the default
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -70,3 +87,4 @@ const Home: NextPage = () => {
 }
 
 export default Home
+*/
