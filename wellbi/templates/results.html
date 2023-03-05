@@ -10,20 +10,19 @@
               <p> Please note: The results may not include your complete medical history and are provided solely for informational purposes and is not a substitute for professional medical advice. 
               </p>
               <div class = "results">
-                <p><b> </b>From the symptoms you inputted it appears you may have Gonorrhea! 
+                <p><b> </b>From the symptoms you inputted it appears you may have Syphillis! 
                 </p>
-                <p> Gonorrhea is common in both men and women. 
-                </p>
-                <p>
-                Common symptoms for females include cloudy/yellow vaginal discharge, abdominal or pelvic pain, irregular bleeding, and painful or more frequent urination.
+                <p> Syphillis is common in both men and women. 
                 </p>
                 <p>
-                Common symptoms for males include pus-like discharge from the tip of the penis, pain or swelling in one testicle, and pain or discomfort with urination.
-                </p>
+                    Common symptoms for Syphillis include painless sores, skin rashes, sores on body and/or in mouth/vagina/anus, fever, swollen lymph nodes, headaches or muscle aches, weight loss, fatigue, difficulty coordinating muscle movements, paralysis, numbness, dementia, and blindness.
+                    </p>
+
+            
                 <div class = "recommendation">
                   <p> We recommend you make an appointment to see a medical professional.
                   </p>
-                  <p><a href="{{ url_for('diagnose.resources')}}">Find Resources on Gonorrhea</a>
+                  <p><a href="{{ url_for('diagnose.resources')}}">Find Resources on Syphillis</a>
                   
                   </p>
                 </div>
@@ -31,27 +30,30 @@
               </body>
             </div>
                         <p>
-                        Other diseases with your symptoms may include: <p> &ensp; Chlamydia</p><p> &ensp; Trichomoniasis</p><p> &ensp; Syphillis</p>
+                        Other disease(s) that match your symptoms may include: <p> &ensp; Hepatitis C</p>
                         </p>
+                        <p><a href="{{ url_for('diagnose.resources')}}">Find Additional Resources</a>
+
                          
 
             <div class="Forums">
               <h4 class="header">Forums</h4>
-              <p><a href="{{ url_for('forum.search',tag='Gonorrhea')}}">Connect with Others about Gonorrhea</a>
+              <p><a href="{{ url_for('forum.search',tag='Syphillis')}}">Connect with Others about Syphillis</a>
               </p>
             </div>
             <div class="Feedback">
                   <h4 class="header">Feedback</h4>
-                  <p> Was this information helpful?
-                  </p>
-                  <head>
-                  <meta charset="UTF-8">
-                  <link rel="stylesheet" type="text/css" href="style.css">
-                  <title>Star Rating</title>
-                  </head>
+
             
                   <body>
-                  <div class="rate">
+                    <div class="rate" id="feedback">
+                    <p> Was this information helpful?
+                    </p>
+                    <head>
+                    <meta charset="UTF-8">
+                    <link rel="stylesheet" type="text/css" href="style.css">
+                    <title>Star Rating</title>
+                    </head>
                     <input type="radio" id="star5" name="rate" value="5" />
                     <label for="star5" title="text">5 stars</label>
                     <input type="radio" id="star4" name="rate" value="4" />
@@ -62,7 +64,14 @@
                     <label for="star2" title="text">2 stars</label>
                     <input type="radio" id="star1" name="rate" value="1" />
                     <label for="star1" title="text">1 star</label>
+                  <button id="button" onclick="submitRating()">Submit</button>
                   </div>
+                  <script>
+                            function submitRating() {
+                                var feedback = document.getElementById("feedback");
+                                feedback.innerHTML = "Thanks for submitting your feedback!"
+                            }
+                  </script>
                   </body>
                 </div>
           </div>

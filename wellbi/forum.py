@@ -49,6 +49,8 @@ def community():
 @bp.route('search/<tag>')
 def search(tag):
     id_list, title_list = db_endpoints.get_posts_with_tag(tag)
+    print(id_list)
+    print(title_list)
     return render_template('search_results.html', id_list=id_list, title_list=title_list, tag=tag)
 
 @bp.route('/show_post', methods=['POST'])
